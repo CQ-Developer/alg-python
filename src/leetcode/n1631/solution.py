@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import override
+from collections import deque
 
 
 class Solution(ABC):
@@ -39,6 +40,33 @@ class SolutionA(Solution):
             mid = (l + r) // 2
             t += 1
             if dfs(0, 0, mid, t):
+                r = mid
+            else:
+                l = mid + 1
+        return r
+
+
+class SolutionB(Solution):
+    """
+    binary search
+    bread first search
+    """
+
+    @override
+    def minimumEffortPath(self, heights: list[list[int]]) -> int:
+        m, n = len(heights), len(heights[0])
+        l, r = 0, 10**6
+        while l < r:
+            mid = (l + r) // 2
+            vis = {(0, 0)}
+            que = deque([(0, 0)])
+            while que:
+                i, j = que.popleft()
+                for x, y in (i, j + 1), (i, j - 1), (i + 1, j), (i - 1, j):
+                    if 0 <= x < m and 0 <= y < n and (x, y) not in vis and abs(heights[i][j] - heights[x][y]) <= mid:
+                        que.append((x, y))
+                        vis.add((x, y))
+            if (m - 1, n - 1) in vis:
                 r = mid
             else:
                 l = mid + 1

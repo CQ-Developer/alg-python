@@ -1,5 +1,5 @@
 from unittest import TestCase
-from src.leetcode.n1631.solution import SolutionA
+from src.leetcode.n1631.solution import SolutionA, SolutionB
 
 
 class TestSolution:
@@ -18,3 +18,9 @@ class TestSolutionA(TestCase, TestSolution):
 
     def setUp(self):
         self.solution = SolutionA()
+
+
+class TestSolutionB(TestCase, TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionB()
