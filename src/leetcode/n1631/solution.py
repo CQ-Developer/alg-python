@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import override
 from collections import deque
+import heapq
 
 
 class Solution(ABC):
@@ -71,3 +72,27 @@ class SolutionB(Solution):
             else:
                 l = mid + 1
         return r
+
+
+class SolutionC(Solution):
+    """
+    dijkstra
+    """
+
+    @override
+    def minimumEffortPath(self, heights: list[list[int]]) -> int:
+        m, n = len(heights), len(heights[0])
+        vis = [[False for _ in range(n)] for _ in range(m)]
+        dis = [[10**6 for _ in range(n)] for _ in range(m)]
+        dis[0][0] = 0
+        heap: list[tuple[int, int, int]] = []
+        heapq.heappush(heap, (0, 0, 0))
+        while heap:
+            _, i, j = heapq.heappop(heap)
+            if not vis[i][j]:
+                vis[i][j] = True
+                for x, y in [i, j + 1], [i, j - 1], [i + 1, j], [i - 1, j]:
+                    if 0 <= x < m and 0 <= y < n:
+                        dis[x][y] = min(dis[x][y], max(dis[i][j], abs(heights[i][j] - heights[x][y])))
+                        heapq.heappush(heap, (dis[x][y], x, y))
+        return dis[m - 1][n - 1]

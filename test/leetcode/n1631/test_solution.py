@@ -1,8 +1,12 @@
 from unittest import TestCase
-from src.leetcode.n1631.solution import SolutionA, SolutionB
+from src.leetcode.n1631.solution import Solution, SolutionA, SolutionB, SolutionC
 
 
-class TestSolution:
+class SolutionTest(TestCase):
+    solution: Solution
+
+    def setUp(self):
+        self.skipTest('skip')
 
     def test_1(self):
         self.assertEqual(2, self.solution.minimumEffortPath([[1, 2, 2], [3, 8, 2], [5, 3, 5]]))
@@ -14,13 +18,19 @@ class TestSolution:
         self.assertEqual(0, self.solution.minimumEffortPath([[1, 2, 1, 1, 1], [1, 2, 1, 2, 1], [1, 2, 1, 2, 1], [1, 2, 1, 2, 1], [1, 1, 1, 2, 1]]))
 
 
-class TestSolutionA(TestCase, TestSolution):
+class TestSolutionA(SolutionTest):
 
     def setUp(self):
         self.solution = SolutionA()
 
 
-class TestSolutionB(TestCase, TestSolution):
+class TestSolutionB(SolutionTest):
 
     def setUp(self):
         self.solution = SolutionB()
+
+
+class TestSolutionC(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionC()
