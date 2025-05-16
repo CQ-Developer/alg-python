@@ -1,4 +1,19 @@
-class Solution:
+from abc import ABC, abstractmethod
+from itertools import accumulate
+from typing import override
+import math
+
+
+class Solution(ABC):
+
+    @abstractmethod
+    def minimizeArrayValue(self, nums: list[int]) -> int:
+        pass
+
+
+class SolutionA(Solution):
+
+    @override
     def minimizeArrayValue(self, nums: list[int]) -> int:
         def check(mid: int) -> bool:
             rest = 0
@@ -14,3 +29,10 @@ class Solution:
             else:
                 l = m + 1
         return r
+
+
+class SolutionB(Solution):
+
+    @override
+    def minimizeArrayValue(self, nums: list[int]) -> int:
+        return max(math.ceil(s / (i + 1)) for i, s in enumerate(accumulate(nums)))
