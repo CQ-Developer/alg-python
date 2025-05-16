@@ -30,3 +30,26 @@ class SolutionA(Solution):
             else:
                 l = m
         return r
+
+
+class SolutionB(Solution):
+
+    @override
+    def minCapability(self, nums: list[int], k: int) -> int:
+        def check(mx: int) -> bool:
+            i = cnt = 0
+            while i < len(nums):
+                if nums[i] <= mx:
+                    cnt += 1
+                    i += 1
+                i += 1
+            return cnt >= k
+
+        l, r = 0, max(nums)
+        while l + 1 < r:
+            m = (l + r) // 2
+            if check(m):
+                r = m
+            else:
+                l = m
+        return r
