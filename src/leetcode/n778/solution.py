@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import override
 from collections import deque
+import heapq
 
 
 class Solution(ABC):
@@ -66,3 +67,23 @@ class SolutionB(Solution):
             else:
                 l = mid + 1
         return r
+
+
+class SolutionC(Solution):
+
+    @override
+    def swimInWater(self, grid: list[list[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        res = 0
+        heap = [(grid[0][0], 0, 0)]
+        vis = [[False for _ in range(n)] for _ in range(m)]
+        while heap:
+            g, i, j = heapq.heappop(heap)
+            res = max(res, g)
+            if i == m - 1 and j == n - 1:
+                break
+            for x, y in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
+                if 0 <= x < m and 0 <= y < n and not vis[x][y]:
+                    heapq.heappush(heap, (grid[x][y], x, y))
+                    vis[x][y] = True
+        return res
