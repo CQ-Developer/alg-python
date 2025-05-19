@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import override
+from collections import deque
 
 
 class Solution(ABC):
@@ -33,6 +34,34 @@ class SolutionA(Solution):
         while l < r:
             mid = (l + r) // 2
             if check([[False for _ in range(n)] for _ in range(m)], 0, 0, mid):
+                r = mid
+            else:
+                l = mid + 1
+        return r
+
+
+class SolutionB(Solution):
+
+    @override
+    def swimInWater(self, grid: list[list[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+
+        def check(mx: int) -> bool:
+            q = deque([(0, 0)])
+            v = [[False for _ in range(n)] for _ in range(m)]
+            v[0][0] = True
+            while q:
+                i, j = q.popleft()
+                for x, y in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
+                    if 0 <= x < m and 0 <= y < n and not v[x][y] and grid[x][y] <= mx:
+                        v[x][y] = True
+                        q.append((x, y))
+            return v[m - 1][n - 1]
+
+        l, r = grid[0][0], max(max(g) for g in grid)
+        while l < r:
+            mid = (l + r) // 2
+            if check(mid):
                 r = mid
             else:
                 l = mid + 1
