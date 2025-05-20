@@ -1,5 +1,5 @@
 from unittest import TestCase
-from src.leetcode.n2513.solution import Solution
+from src.leetcode.n2513.solution import Solution, SolutionA
 
 
 class SolutionTest(TestCase):
@@ -16,3 +16,9 @@ class SolutionTest(TestCase):
 
     def test_3(self):
         self.assertEqual(15, self.solution.minimizeSet(2, 4, 8, 2))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
