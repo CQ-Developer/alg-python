@@ -1,4 +1,4 @@
-from src.leetcode.n3281.solution import Solution
+from src.leetcode.n3281.solution import Solution, SolutionA
 from unittest import TestCase
 
 
@@ -14,3 +14,9 @@ class SolutionTest(TestCase):
 
     def test_2(self):
         self.assertEqual(5, self.solution.maxPossibleScore([2, 6, 13, 13], 5))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
