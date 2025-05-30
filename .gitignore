@@ -1,6 +1,5 @@
 # vscode
 .vscode
-.devcontainer
 
 # python
 **/__pycache__

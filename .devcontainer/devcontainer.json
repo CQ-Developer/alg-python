@@ -1,0 +1,43 @@
+{
+    "name": "alg-python",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12",
+    "features": {
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "none",
+            "installTools": false,
+            "optimize": true
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.black-formatter"
+            ],
+            "settings": {
+                "black-formatter.args": [
+                    "-S",
+                    "-l",
+                    "999"
+                ],
+                "python.analysis.typeCheckingMode": "strict",
+                "python.analysis.extraPaths": [
+                    "src",
+                    "test"
+                ],
+                "python.analysis.diagnosticSeverityOverrides": {
+                    "reportIncompatibleMethodOverride": "information"
+                },
+                "python.testing.unittestEnabled": true,
+                "python.testing.unittestArgs": [
+                    "-v",
+                    "-t",
+                    ".",
+                    "-s",
+                    "test",
+                    "-p",
+                    "test_*.py"
+                ]
+            }
+        }
+    }
+}
