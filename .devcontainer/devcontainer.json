@@ -6,6 +6,12 @@
             "version": "none",
             "installTools": false,
             "optimize": true
+        },
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "upgradlePackages": true,
+            "installOhMyZsh": false,
+            "installOhMyZshConfig": false,
+            "installZsh": false
         }
     },
     "customizations": {
