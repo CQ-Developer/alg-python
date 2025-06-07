@@ -1,4 +1,4 @@
-from src.leetcode.n668.solution import Solution
+from src.leetcode.n668.solution import Solution, SolutionA
 from unittest import TestCase
 
 
@@ -20,3 +20,9 @@ class SolutionTest(TestCase):
 
     def test_4(self):
         self.assertEqual(23437314, self.solution.findKthNumber(17452, 29185, 95573422))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
