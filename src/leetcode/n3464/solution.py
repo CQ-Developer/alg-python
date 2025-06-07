@@ -86,7 +86,6 @@ class SolutionB(Solution):
         arr.sort()
 
         def check(low: int) -> bool:
-            print(low)
             idx = [0] * k
             for i, j in pairwise(range(k)):
                 f = bisect_left(arr, arr[idx[i]] + low)
