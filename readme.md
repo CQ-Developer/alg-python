@@ -3,21 +3,14 @@
 ## setup venv
 
 ```shell
-python -m venv .venv
-pipenv install sortedcontainers sortedcontainers-stubs
-```
-
-## create __init__.py
-
-```shell
-find src/ -type f -exec touch "{}/__init__.py" \;
-find test/ -type f -exec touch "{}/__init__.py" \;
+pipenv install
 ```
 
 ## vscode config
 
 ```json
 {
+    "editor.defaultFormatter": "ms-python.black-formatter",
     "black-formatter.args": [
         "-S",
         "-l", "999"

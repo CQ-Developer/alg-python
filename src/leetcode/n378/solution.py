@@ -32,3 +32,29 @@ class SolutionB(Solution):
             if j + 1 < n:
                 heapq.heappush(q, (matrix[i][j + 1], i, j + 1))
         return heapq.heappop(q)[0]
+
+
+class SolutionC(Solution):
+
+    @override
+    def kthSmallest(self, matrix: list[list[int]], k: int) -> int:
+        n = len(matrix)
+
+        def check(top: int) -> bool:
+            i, j, cnt = n - 1, 0, 0
+            while 0 <= i and j < n:
+                if matrix[i][j] <= top:
+                    cnt += i + 1
+                    j += 1
+                else:
+                    i -= 1
+            return cnt >= k
+
+        l, r = matrix[0][0], matrix[-1][-1]
+        while l <= r:
+            mid = (l + r) // 2
+            if check(mid):
+                r = mid - 1
+            else:
+                l = mid + 1
+        return l
