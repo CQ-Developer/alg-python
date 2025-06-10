@@ -1,5 +1,19 @@
 # alg-python
 
+## setup venv
+
+```shell
+python -m venv .venv
+pipenv install sortedcontainers sortedcontainers-stubs
+```
+
+## create __init__.py
+
+```shell
+find src/ -type f -exec touch "{}/__init__.py" \;
+find test/ -type f -exec touch "{}/__init__.py" \;
+```
+
 ## vscode config
 
 ```json
@@ -26,11 +40,4 @@
     "python.terminal.activateEnvironment": true,
     "python.defaultInterpreterPath": ".venv/bin/python"
 }
-```
-
-## create __init__.py
-
-```shell
-find src/ -type f -exec touch "{}/__init__.py" \;
-find test/ -type f -exec touch "{}/__init__.py" \;
 ```
