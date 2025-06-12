@@ -30,7 +30,6 @@ pipenv install
         "-s", "test",
         "-p", "test_*.py"
     ],
-    "python.terminal.activateEnvironment": true,
-    "python.defaultInterpreterPath": ".venv/bin/python"
+    "python.terminal.activateEnvironment": true
 }
 ```
