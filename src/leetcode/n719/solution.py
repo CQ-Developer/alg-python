@@ -32,3 +32,26 @@ class SolutionA(Solution):
             else:
                 l = mid + 1
         return r
+
+
+class SolutionB(Solution):
+
+    @override
+    def smallestDistancePair(self, nums: list[int], k: int) -> int:
+        def check(x: int) -> int:
+            l = cnt = 0
+            for r, v in enumerate(nums):
+                while v - nums[l] > x:
+                    l += 1
+                cnt += r - l
+            return cnt
+
+        nums.sort()
+        l, r = 0, nums[-1] - nums[0]
+        while l <= r:
+            mid = (l + r) // 2
+            if check(mid) >= k:
+                r = mid - 1
+            else:
+                l = mid + 1
+        return l
