@@ -10,7 +10,9 @@ pipenv install
 
 ```json
 {
-    "editor.defaultFormatter": "ms-python.black-formatter",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
     "black-formatter.args": [
         "-S",
         "-l", "999"
