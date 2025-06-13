@@ -1,4 +1,4 @@
-from src.leetcode.n1201.solution import Solution
+from src.leetcode.n1201.solution import Solution, SolutionA
 from unittest import TestCase
 
 
@@ -17,3 +17,9 @@ class SolutionTest(TestCase):
 
     def test_3(self):
         self.assertEqual(10, self.solution.nthUglyNumber(5, 2, 11, 13))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
