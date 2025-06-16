@@ -1,4 +1,4 @@
-from src.leetcode.n793.solution import Solution
+from src.leetcode.n793.solution import Solution, SolutionA
 from unittest import TestCase
 
 
@@ -17,3 +17,9 @@ class SolutionTest(TestCase):
 
     def test_3(self):
         self.assertEqual(5, self.solution.preimageSizeFZF(3))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
