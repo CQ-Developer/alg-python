@@ -1,4 +1,4 @@
-from src.leetcode.n373.solution import Solution
+from src.leetcode.n373.solution import Solution, SolutionA
 from unittest import TestCase
 
 
@@ -14,3 +14,9 @@ class SolutionTest(TestCase):
 
     def test_2(self):
         self.assertListEqual([[1, 1], [1, 1]], self.solution.kSmallestPairs([1, 1, 2], [1, 2, 3], 2))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
