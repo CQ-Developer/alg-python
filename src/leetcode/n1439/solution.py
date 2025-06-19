@@ -1,3 +1,4 @@
+import heapq
 from abc import ABC, abstractmethod
 from typing import override
 from itertools import islice
@@ -45,3 +46,25 @@ class SolutionB(Solution):
             else:
                 l = mid + 1
         return l
+
+
+class SolutionC(Solution):
+
+    @override
+    def kth_smallest(self, mat: list[list[int]], k: int) -> int:
+        def kth_smallest_pairs(a: list[int], b: list[int]) -> list[int]:
+            ans: list[int] = []
+            h = [(a[0] + b[0], 0, 0)]
+            while h and len(ans) < k:
+                _, i, j = heapq.heappop(h)
+                ans.append(a[i] + b[j])
+                if j == 0 and i + 1 < len(a):
+                    heapq.heappush(h, (a[i + 1] + b[0], i + 1, 0))
+                if j + 1 < len(b):
+                    heapq.heappush(h, (a[i] + b[j + 1], i, j + 1))
+            return ans
+
+        ans = mat[0][:k]
+        for row in islice(mat, 1, None):
+            ans = kth_smallest_pairs(ans, row)
+        return ans[-1]
