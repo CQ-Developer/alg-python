@@ -1,9 +1,8 @@
-from src.leetcode.n786.solution import Solution
+from src.leetcode.n786.solution import Solution, SolutionA
 from unittest import TestCase
 
 
 class SolutionTest(TestCase):
-
     solution: Solution
 
     def setUp(self):
@@ -14,3 +13,9 @@ class SolutionTest(TestCase):
 
     def test_2(self):
         self.assertListEqual([1, 7], self.solution.kth_smallest_prime_fraction([1, 7], 1))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
