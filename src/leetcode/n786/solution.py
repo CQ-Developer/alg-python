@@ -1,6 +1,7 @@
 import heapq
 from abc import ABC, abstractmethod
 from typing import override
+from itertools import islice
 
 
 class Solution(ABC):
@@ -34,3 +35,25 @@ class SolutionA(Solution):
             if i + 1 < j:
                 heapq.heappush(h, Frac(i + 1, j, arr[i + 1], arr[j]))
         return [h[0].x, h[0].y]
+
+
+class SolutionB(Solution):
+
+    @override
+    def kth_smallest_prime_fraction(self, arr: list[int], k: int) -> list[int]:
+        l, r = 0, 1
+        while True:
+            mid = (l + r) / 2
+            i, x, y, cnt = 0, 0, 1, 0
+            for v in islice(arr, 1, None):
+                while arr[i] / v < mid:
+                    if arr[i] * y > x * v:
+                        x, y = arr[i], v
+                    i += 1
+                cnt += i
+            if cnt == k:
+                return [x, y]
+            if cnt < k:
+                l = mid
+            else:
+                r = mid
