@@ -1,4 +1,4 @@
-from src.leetcode.n3116.solution import Solution
+from src.leetcode.n3116.solution import Solution, SolutionA
 from unittest import TestCase
 
 
@@ -17,3 +17,9 @@ class SolutionTest(TestCase):
 
     def test_3(self):
         self.assertEqual(35, self.solution.find_kth_smallest([5], 7))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
