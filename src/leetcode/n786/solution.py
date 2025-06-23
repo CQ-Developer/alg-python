@@ -27,11 +27,12 @@ class SolutionA(Solution):
 
     @override
     def kth_smallest_prime_fraction(self, arr: list[int], k: int) -> list[int]:
-        h = [Frac(0, j + 1, arr[0], y) for j, y in enumerate(arr[1:])]
-        heapq.heapify(h)
+        h = [Frac(0, len(arr) - 1, arr[0], arr[-1])]
         for _ in range(1, k):
             frac = heapq.heappop(h)
             i, j = frac.i, frac.j
+            if i == 0 and j > 0:
+                heapq.heappush(h, Frac(0, j - 1, arr[0], arr[j - 1]))
             if i + 1 < j:
                 heapq.heappush(h, Frac(i + 1, j, arr[i + 1], arr[j]))
         return [h[0].x, h[0].y]
