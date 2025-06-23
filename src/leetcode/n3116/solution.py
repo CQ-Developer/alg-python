@@ -22,7 +22,7 @@ class SolutionA(Solution):
             for s in range(1, 1 << n):
                 y = 1
                 for i, v in enumerate(coins):
-                    if (1 << i & s) != 0:
+                    if 1 << i & s:
                         y = lcm(v, y)
                         if y > x:
                             break
@@ -44,8 +44,13 @@ class SolutionB(Solution):
 
     @override
     def find_kth_smallest(self, coins: list[int], k: int) -> int:
-        subs = [1] * (1 << len(coins))
-        for i, x in enumerate(coins):
+        coins.sort()
+        arr = [coins[0]]
+        for x in coins[1:]:
+            if all(x % y for y in arr):
+                arr.append(x)
+        subs = [1] * (1 << len(arr))
+        for i, x in enumerate(arr):
             s = 1 << i
             for m in range(s):
                 subs[s | m] = lcm(subs[m], x)
@@ -56,4 +61,4 @@ class SolutionB(Solution):
                 cnt += x // subs[s] if s.bit_count() & 1 else -(x // subs[s])
             return cnt >= k
 
-        return bisect_left(range(k * min(coins)), True, k, key=check)
+        return bisect_left(range(k * arr[0]), True, k, key=check)
