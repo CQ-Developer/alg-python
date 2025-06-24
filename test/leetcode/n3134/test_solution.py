@@ -1,4 +1,4 @@
-from src.leetcode.n3134.solution import Solution
+from src.leetcode.n3134.solution import Solution, SolutionA
 from unittest import TestCase
 
 
@@ -16,3 +16,9 @@ class SolutionTest(TestCase):
 
     def test_3(self):
         self.assertEqual(2, self.solution.median_of_uniqueness_array([4, 3, 5, 4]))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
