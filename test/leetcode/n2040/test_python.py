@@ -1,4 +1,4 @@
-from src.leetcode.n2040.solution import Solution
+from src.leetcode.n2040.solution import Solution, SolutionA
 from unittest import TestCase
 
 
@@ -16,3 +16,9 @@ class SolutionTest(TestCase):
 
     def test_3(self):
         self.assertEqual(-6, self.solution.kth_smallest_product([-2, -1, 0, 1, 2], [-3, -1, 2, 4, 5], 3))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
