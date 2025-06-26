@@ -1,4 +1,4 @@
-from src.leetcode.n2386.solution import Solution
+from src.leetcode.n2386.solution import Solution, SolutionA
 from unittest import TestCase
 
 
@@ -13,3 +13,9 @@ class SolutionTest(TestCase):
 
     def test_2(self):
         self.assertEqual(10, self.solution.k_sum([1, -2, 3, 4, -10, 12], 16))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
