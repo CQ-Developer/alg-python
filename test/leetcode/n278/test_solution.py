@@ -1,4 +1,4 @@
-from src.leetcode.n278.solution import Solution, SolutionA
+from src.leetcode.n278.solution import Solution, SolutionA, SolutionB
 from unittest import TestCase, SkipTest
 from unittest.mock import patch, MagicMock
 
@@ -27,3 +27,9 @@ class TestSolutionA(TestSolution):
 
     def setUp(self):
         self.solution = SolutionA()
+
+
+class TestSolutionB(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionB()

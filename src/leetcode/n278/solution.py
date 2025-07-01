@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import override
+from bisect import bisect_left
 
 
 def is_bad_version(version: int) -> bool:
@@ -25,3 +26,10 @@ class SolutionA(Solution):
             else:
                 l = i + 1
         return l
+
+
+class SolutionB(Solution):
+
+    @override
+    def first_bad_version(self, n: int) -> int:
+        return bisect_left(range(n), True, key=is_bad_version)
