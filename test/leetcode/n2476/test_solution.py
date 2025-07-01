@@ -1,4 +1,4 @@
-from src.leetcode.n2476.solution import TreeNode, Solution
+from src.leetcode.n2476.solution import TreeNode, Solution, SolutionA
 from unittest import TestCase
 
 
@@ -15,3 +15,9 @@ class SolutionTest(TestCase):
     def test_2(self):
         root = TreeNode(4, None, TreeNode(9))
         self.assertListEqual([[-1, 4]], self.solution.closest_nodes(root, [3]))
+
+
+class SolutionATest(SolutionTest):
+
+    def setUp(self):
+        self.solution = SolutionA()
