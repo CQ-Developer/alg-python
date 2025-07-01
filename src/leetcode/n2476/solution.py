@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import override
+from bisect import bisect_left
 
 
 class TreeNode:
@@ -24,27 +25,21 @@ class SolutionA(Solution):
         a: list[int] = []
         res: list[list[int]] = []
 
-        def in_order_traversal(root: TreeNode | None):
+        def dfs(root: TreeNode | None):
             if root is None:
                 return
-            in_order_traversal(root.left)
+            dfs(root.left)
             a.append(root.val)
-            in_order_traversal(root.right)
+            dfs(root.right)
 
-        in_order_traversal(root)
+        dfs(root)
         n = len(a)
 
         for x in queries:
-            l, r = -1, n
-            while l + 1 < r:
-                i = (l + r) // 2
-                if a[i] >= x:
-                    r = i
-                else:
-                    l = i
-            mx = a[r] if r < n else -1
-            if r == n or a[r] != x:
-                r -= 1
-            mn = a[r] if r >= 0 else -1
+            i = bisect_left(a, x)
+            mx = a[i] if i < n else -1
+            if i == n or a[i] != x:
+                i -= 1
+            mn = a[i] if i >= 0 else -1
             res.append([mn, mx])
         return res
