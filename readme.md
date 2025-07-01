@@ -23,7 +23,8 @@ pipenv install
         "test"
     ],
     "python.analysis.diagnosticSeverityOverrides": {
-        "reportIncompatibleMethodOverride": "warning"
+        "reportIncompatibleMethodOverride": "warning",
+        "reportUnknownLambdaType": "information"
     },
     "python.testing.unittestEnabled": true,
     "python.testing.unittestArgs": [
