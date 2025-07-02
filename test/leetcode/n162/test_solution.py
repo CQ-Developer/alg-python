@@ -1,4 +1,4 @@
-from src.leetcode.n162.solution import Solution
+from src.leetcode.n162.solution import Solution, SolutionA
 from unittest import TestCase, SkipTest
 
 
@@ -16,3 +16,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertIn(self.solution.find_peak_element([1, 2, 1, 3, 5, 6, 4]), [1, 5])
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
