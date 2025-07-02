@@ -1,4 +1,4 @@
-from src.leetcode.n1901.solution import Solution
+from src.leetcode.n1901.solution import Solution, SolutionA
 from unittest import TestCase, SkipTest
 
 
@@ -16,3 +16,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertListEqual([1, 1], self.solution.find_peak_grid([[10, 20, 15], [21, 30, 14], [7, 16, 32]]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
