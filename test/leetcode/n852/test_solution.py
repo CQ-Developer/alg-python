@@ -1,4 +1,4 @@
-from src.leetcode.n852.solution import Solution
+from src.leetcode.n852.solution import Solution, SolutionA
 from unittest import TestCase, SkipTest
 
 
@@ -19,3 +19,9 @@ class TestSolution(TestCase):
 
     def test_3(self):
         self.assertEqual(1, self.solution.peak_index_in_mountain_array([0, 10, 5, 2]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
