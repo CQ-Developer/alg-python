@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import override
+from bisect import bisect_left
 
 
 class MountainArray(ABC):
@@ -39,14 +40,8 @@ class SolutionA(Solution):
             return -1
 
         n = mountainArr.length()
-        l, r = 0, n - 2
-        while l < r:
-            i = (l + r) // 2
-            if mountainArr.get(i) > mountainArr.get(i + 1):
-                r = i
-            else:
-                l = i + 1
-        i = search(target, 0, r, False)
+        j = bisect_left(range(n - 1), True, key=lambda i: mountainArr.get(i) > mountainArr.get(i + 1))
+        i = search(target, 0, j, False)
         if i == -1:
-            i = search(-target, r + 1, n - 1, True)
+            i = search(-target, j + 1, n - 1, True)
         return i
