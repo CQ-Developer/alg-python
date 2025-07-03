@@ -1,4 +1,4 @@
-from src.leetcode.n1095.solution import Solution
+from src.leetcode.n1095.solution import Solution, SolutionA
 from unittest import TestCase, SkipTest
 from unittest.mock import patch, MagicMock
 
@@ -27,3 +27,9 @@ class TestSolution(TestCase):
         mountain_arr.length.return_value = len(arr)
         mountain_arr.get.side_effect = lambda i: arr[i]
         self.assertEqual(-1, self.solution.find_in_mountain_array(3, mountain_arr))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
