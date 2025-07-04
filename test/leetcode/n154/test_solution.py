@@ -1,4 +1,4 @@
-from src.leetcode.n154.solution import Solution
+from src.leetcode.n154.solution import Solution, SolutionA
 from unittest import TestCase, SkipTest
 
 
@@ -16,3 +16,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertEqual(0, self.solution.find_min([2, 2, 2, 0, 1]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
