@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import override
 
 
 class TreeNode:
@@ -14,3 +15,12 @@ class Solution(ABC):
     @abstractmethod
     def count_nodes(self, root: TreeNode | None) -> int:
         pass
+
+
+class SolutionA(Solution):
+
+    @override
+    def count_nodes(self, root: TreeNode | None) -> int:
+        if root:
+            return self.count_nodes(root.left) + self.count_nodes(root.right) + 1
+        return 0

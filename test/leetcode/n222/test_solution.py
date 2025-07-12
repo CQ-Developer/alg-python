@@ -1,4 +1,4 @@
-from src.leetcode.n222.solution import TreeNode, Solution
+from src.leetcode.n222.solution import TreeNode, Solution, SolutionA
 from unittest import TestCase, SkipTest
 
 
@@ -21,3 +21,9 @@ class TestSolution(TestCase):
     def test_3(self):
         root = TreeNode(1)
         self.assertEqual(1, self.solution.count_nodes(root))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
