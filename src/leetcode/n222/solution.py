@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import override
 from collections import deque
+from typing import override
 
 
 class TreeNode:
@@ -44,3 +44,20 @@ class SolutionB(Solution):
                 q.append(c.right)
             cnt += 1
         return cnt
+
+
+class SolutionC(Solution):
+
+    @override
+    def count_nodes(self, root: TreeNode | None) -> int:
+        l, cur = 0, root
+        while cur:
+            l += 1
+            cur = cur.left
+        r, cur = 0, root
+        while cur:
+            r += 1
+            cur = cur.right
+        if l == r:
+            return 2 ** l - 1
+        return self.count_nodes(root.left) + self.count_nodes(root.right) + 1
