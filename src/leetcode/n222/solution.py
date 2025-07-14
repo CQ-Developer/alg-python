@@ -59,5 +59,36 @@ class SolutionC(Solution):
             r += 1
             cur = cur.right
         if l == r:
-            return 2 ** l - 1
+            return (1 << l) - 1
         return self.count_nodes(root.left) + self.count_nodes(root.right) + 1
+
+
+class SolutionD(Solution):
+
+    @override
+    def count_nodes(self, root: TreeNode | None) -> int:
+        if not root:
+            return 0
+        h, node = 0, root
+        while node.left:
+            h += 1
+            node = node.left
+
+        def check(k: int) -> TreeNode | None:
+            b, node = 1 << (h - 1), root
+            while node and b > 0:
+                if (b & k) == 0:
+                    node = node.left
+                else:
+                    node = node.right
+                b >>= 1
+            return node
+
+        l, r = (1 << h), 1 << (h + 1)
+        while l + 1 < r:
+            i = (l + r) // 2
+            if check(i):
+                l = i
+            else:
+                r = i
+        return l

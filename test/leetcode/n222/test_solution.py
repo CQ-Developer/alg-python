@@ -1,6 +1,5 @@
 from unittest import TestCase, SkipTest
-
-from src.leetcode.n222.solution import TreeNode, Solution, SolutionA, SolutionB, SolutionC
+from src.leetcode.n222.solution import TreeNode, Solution, SolutionA, SolutionB, SolutionC, SolutionD
 
 
 class TestSolution(TestCase):
@@ -37,5 +36,12 @@ class TestSolutionB(TestSolution):
 
 
 class TestSolutionC(TestSolution):
+
     def setUp(self):
         self.solution = SolutionC()
+
+
+class TestSolutionD(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionD()
