@@ -1,4 +1,4 @@
-from src.leetcode.n1539.solution import Solution
+from src.leetcode.n1539.solution import Solution, SolutionA
 from unittest import TestCase, SkipTest
 
 
@@ -16,3 +16,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertEqual(6, self.solution.find_kth_positive([1, 2, 3, 4], 2))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
