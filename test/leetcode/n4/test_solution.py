@@ -1,6 +1,6 @@
 from unittest import TestCase, SkipTest
 
-from src.leetcode.n4.solution import Solution
+from src.leetcode.n4.solution import Solution, SolutionA
 
 
 class TestSolution(TestCase):
@@ -17,3 +17,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertEqual(2.5, self.solution.find_median_sorted_arrays([1, 2], [3, 4]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
