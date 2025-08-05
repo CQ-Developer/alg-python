@@ -1,5 +1,5 @@
 from unittest import TestCase, SkipTest
-from src.leetcode.n2001.solution import Solution
+from src.leetcode.n2001.solution import Solution, SolutionA
 
 
 class TestSolution(TestCase):
@@ -16,3 +16,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertEqual(0, self.solution.interchangeable_rectangles([[4, 5], [7, 8]]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
