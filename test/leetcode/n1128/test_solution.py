@@ -1,6 +1,5 @@
 from unittest import TestCase, SkipTest
-
-from src.leetcode.n1128.solution import Solution
+from src.leetcode.n1128.solution import Solution, SolutionA
 
 
 class TestSolution(TestCase):
@@ -17,3 +16,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertEqual(3, self.solution.num_equiv_domino_pairs([[1, 2], [1, 2], [1, 1], [1, 2], [2, 2]]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
