@@ -1,6 +1,6 @@
 from unittest import TestCase, SkipTest
 
-from src.leetcode.n219.solution import Solution
+from src.leetcode.n219.solution import Solution, SolutionA
 
 
 class TestSolution(TestCase):
@@ -8,7 +8,8 @@ class TestSolution(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        raise SkipTest('skip')
+        if cls is TestSolution:
+            raise SkipTest('skip')
 
     def test_1(self):
         self.assertTrue(self.solution.contains_nearby_duplicate([1, 2, 3, 1], 3))
@@ -27,3 +28,9 @@ class TestSolution(TestCase):
 
     def test_6(self):
         self.assertTrue(self.solution.contains_nearby_duplicate([0, 1, 2, 3, 2, 5], 3))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
