@@ -1,6 +1,6 @@
 from unittest import TestCase, SkipTest
 
-from src.leetcode.n2342.solution import Solution
+from src.leetcode.n2342.solution import Solution, SolutionA
 
 
 class TestSolution(TestCase):
@@ -16,3 +16,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertEqual(-1, self.solution.maximum_sum([10, 12, 19, 14]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
