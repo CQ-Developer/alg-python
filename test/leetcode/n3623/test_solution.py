@@ -1,5 +1,6 @@
-from src.leetcode.n3623.solution import Solution
 from unittest import TestCase, SkipTest
+
+from src.leetcode.n3623.solution import Solution, SolutionA
 
 
 class TestSolution(TestCase):
@@ -15,3 +16,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertEqual(1, self.solution.count_trapezoids([[0, 0], [1, 0], [0, 1], [2, 1]]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
