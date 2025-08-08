@@ -1,6 +1,6 @@
 from unittest import TestCase, SkipTest
 
-from src.leetcode.interview.n16.n24.solution import Solution
+from src.leetcode.interview.n16.n24.solution import Solution, SolutionA
 
 
 class TestSolution(TestCase):
@@ -16,3 +16,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertListEqual([[5, 6], [5, 6]], self.solution.pair_sums([5, 6, 5, 6], 11))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
