@@ -1,4 +1,4 @@
-from src.leetcode.n624.solution import Solution
+from src.leetcode.n624.solution import Solution, SolutionA
 from unittest import TestCase, SkipTest
 
 
@@ -15,3 +15,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertEqual(0, self.solution.max_distance([[1], [1]]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
