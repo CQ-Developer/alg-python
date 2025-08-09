@@ -1,4 +1,4 @@
-from src.leetcode.n3371.solution import Solution
+from src.leetcode.n3371.solution import Solution, SolutionA
 from unittest import TestCase, SkipTest
 
 
@@ -18,3 +18,9 @@ class TestSolution(TestCase):
 
     def test_3(self):
         self.assertEqual(5, self.solution.get_largest_outlier([1, 1, 1, 1, 1, 5, 5]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
