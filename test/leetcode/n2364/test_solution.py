@@ -1,4 +1,4 @@
-from src.leetcode.n2364.solution import Solution
+from src.leetcode.n2364.solution import Solution, SolutionA
 from unittest import TestCase, SkipTest
 
 
@@ -15,3 +15,9 @@ class TestSolution(TestCase):
 
     def test2(self):
         self.assertEqual(0, self.solution.count_bad_pairs([1, 2, 3, 4, 5]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
