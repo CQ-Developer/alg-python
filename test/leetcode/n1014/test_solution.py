@@ -1,4 +1,4 @@
-from src.leetcode.n1014.solution import Solution
+from src.leetcode.n1014.solution import Solution, SolutionA
 from unittest import TestCase, SkipTest
 
 
@@ -15,3 +15,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertEqual(2, self.solution.max_score_sightseeing_pair([1, 2]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
