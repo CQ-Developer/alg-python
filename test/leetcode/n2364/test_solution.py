@@ -6,7 +6,7 @@ class TestSolution(TestCase):
     solution: Solution
 
     @classmethod
-    def setUpTest(cls):
+    def setUpClass(cls):
         if cls is TestSolution:
             raise SkipTest('skip')
 
