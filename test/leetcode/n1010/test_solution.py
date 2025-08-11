@@ -1,5 +1,6 @@
 from unittest import TestCase, SkipTest
-from src.leetcode.n1010.solution import Solution
+
+from src.leetcode.n1010.solution import Solution, SolutionA
 
 
 class TestSolution(TestCase):
@@ -15,3 +16,9 @@ class TestSolution(TestCase):
 
     def test_2(self):
         self.assertEqual(3, self.solution.num_pairs_divisible_by_60([60, 60, 60]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
