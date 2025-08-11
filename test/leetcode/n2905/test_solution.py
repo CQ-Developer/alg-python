@@ -1,5 +1,5 @@
 from unittest import TestCase, SkipTest
-from src.leetcode.n2905.solution import Solution
+from src.leetcode.n2905.solution import Solution, SolutionA
 
 
 class TestSolution(TestCase):
@@ -18,3 +18,9 @@ class TestSolution(TestCase):
 
     def test_3(self):
         self.assertListEqual([-1, -1], self.solution.find_indices([1, 2, 3], 2, 4))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
