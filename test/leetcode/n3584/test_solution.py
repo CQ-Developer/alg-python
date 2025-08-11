@@ -1,5 +1,5 @@
 from unittest import TestCase, SkipTest
-from src.leetcode.n3584.solution import Solution
+from src.leetcode.n3584.solution import Solution, SolutionA
 
 
 class TestSolution(TestCase):
@@ -18,3 +18,9 @@ class TestSolution(TestCase):
 
     def test_3(self):
         self.assertEqual(35, self.solution.maximum_product([2, -1, 2, -6, 5, 2, -5, 7], 2))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
