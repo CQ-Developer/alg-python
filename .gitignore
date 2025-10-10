@@ -1,8 +1,4 @@
-# pycharm
 .idea/
-
-# vscode
 .vscode/
-
-# python
+.devcontainer/
 **/__pycache__/
