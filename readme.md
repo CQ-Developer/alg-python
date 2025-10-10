@@ -60,8 +60,7 @@ pipenv install
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-python.black-formatter",
-                "catppuccin.catppuccin-vsc-pack"
+                "ms-python.black-formatter"
             ]
         }
     }
