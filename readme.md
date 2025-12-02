@@ -3,7 +3,7 @@
 ## setup venv
 
 ```shell
-pipenv install
+uv sync
 ```
 
 ## vscode config
@@ -43,7 +43,9 @@ pipenv install
 ```json
 {
     "name": "alg-python",
-    "image": "mcr.microsoft.com/devcontainers/python:3.12",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
     "features": {
         "ghcr.io/devcontainers/features/python:1": {
             "version": "none",
@@ -65,4 +67,11 @@ pipenv install
         }
     }
 }
+```
+
+```dockerfile
+FROM mcr.microsoft.com/devcontainers/python:3.12
+USER vscode
+WORKDIR /home/vscode
+RUN wget -qO- https://astral.sh/uv/install.sh | sh
 ```
