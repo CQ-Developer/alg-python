@@ -15,7 +15,6 @@ uv sync
         "editor.formatOnSave": true
     },
     "black-formatter.args": [
-        "-S",
         "-l", "999"
     ],
     "python.analysis.typeCheckingMode": "standard",
