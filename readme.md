@@ -11,7 +11,8 @@ uv sync
 ```json
 {
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true
     },
     "black-formatter.args": [
         "-S",
@@ -42,27 +43,20 @@ uv sync
 
 ```json
 {
-    "name": "alg-python",
+    "remoteUser": "chen",
+    "remoteEnv": {
+        "TZ": "Asia/Shanghai",
+        "Lang": "C.UTF-8"
+    },
     "build": {
         "dockerfile": "Dockerfile"
-    },
-    "features": {
-        "ghcr.io/devcontainers/features/python:1": {
-            "version": "none",
-            "installTools": false,
-            "optimize": true
-        },
-        "ghcr.io/devcontainers/features/common-utils:2": {
-            "upgradlePackages": true,
-            "installOhMyZsh": false,
-            "installOhMyZshConfig": false,
-            "installZsh": false
-        }
     },
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-python.black-formatter"
+                "ms-python.python",
+                "ms-python.black-formatter",
+                "tamasfe.even-better-toml"
             ]
         }
     }
@@ -70,8 +64,25 @@ uv sync
 ```
 
 ```dockerfile
-FROM mcr.microsoft.com/devcontainers/python:3.12
-USER vscode
-WORKDIR /home/vscode
-RUN wget -qO- https://astral.sh/uv/install.sh | sh
+FROM docker.1ms.run/library/fedora:43
+RUN dnf -y upgrade && \
+    dnf -y install git curl && \
+    groupadd -g 1000 chen && \
+    useradd -m -s /bin/bash -u 1000 -g 1000 chen
+WORKDIR /home/chen
+COPY init.sh .
+RUN chown 1000:1000 init.sh && \
+    chmod 754 init.sh
+USER chen
+RUN ./init.sh
+```
+
+```shell
+#!/bin/bash
+
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source .bashrc
+uv python install 3.11 --default
+
+rm -f ./init.sh
 ```
