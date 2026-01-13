@@ -55,9 +55,9 @@ class SolutionC(Solution):
     def count_good_triplets(self, arr: list[int], a: int, b: int, c: int) -> int:
         idx = sorted(range(len(arr)), key=lambda i: arr[i])
         ans = 0
-        for j, y in enumerate(idx):
-            left = [arr[i] for i in idx if i < j and abs(arr[i] - y) <= a]
-            right = [arr[k] for k in idx if k > j and abs(y - arr[k]) <= b]
+        for j in idx:
+            left = [arr[i] for i in idx if i < j and abs(arr[i] - arr[j]) <= a]
+            right = [arr[k] for k in idx if k > j and abs(arr[j] - arr[k]) <= b]
             p1 = p2 = 0
             for x in left:
                 while p2 < len(right) and right[p2] <= x + c:
