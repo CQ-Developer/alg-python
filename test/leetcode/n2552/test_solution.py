@@ -1,4 +1,4 @@
-from src.leetcode.n2552.solution import Solution
+from src.leetcode.n2552.solution import Solution, SolutionA, SolutionB
 from unittest import TestCase, SkipTest
 
 
@@ -15,3 +15,15 @@ class TestSolution(TestCase):
 
     def test_b(self):
         self.assertEqual(0, self.solution.count_quadruplets([1, 2, 3, 4]))
+
+
+class TestSolutionA(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()
+
+
+class TestSolutionB(TestSolution):
+
+    def setUp(self):
+        self.solution = SolutionA()

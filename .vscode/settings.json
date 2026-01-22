@@ -1,0 +1,30 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true
+    },
+    "black-formatter.args": [
+        "-l", "999"
+    ],
+    "python.analysis.typeCheckingMode": "standard",
+    "python.analysis.extraPaths": [
+        "src",
+        "test"
+    ],
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportIncompatibleMethodOverride": "warning",
+        "reportUnknownLambdaType": "warning",
+        "reportOptionalMemberAccess": "warning",
+        "reportArgumentType": "warning",
+        "reportCallIssue": "warning",
+        "reportOptionalSubscript": "warning"
+    },
+    "python.testing.unittestEnabled": true,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-t", ".",
+        "-s", "test",
+        "-p", "test_*.py"
+    ],
+    "python.terminal.activateEnvironment": true
+}
