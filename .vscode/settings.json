@@ -17,7 +17,9 @@
         "reportOptionalMemberAccess": "warning",
         "reportArgumentType": "warning",
         "reportCallIssue": "warning",
-        "reportOptionalSubscript": "warning"
+        "reportOptionalSubscript": "warning",
+        "reportGeneralTypeIssues": "warning",
+        "reportReturnType": "warning"
     },
     "python.testing.unittestEnabled": true,
     "python.testing.unittestArgs": [
