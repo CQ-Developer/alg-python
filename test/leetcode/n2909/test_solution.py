@@ -20,7 +20,7 @@ class TestSolution(TestCase):
         self.assertEqual(-1, self.solution.minimum_sum([6, 5, 4, 3, 4, 5]))
 
 
-class TestSolutionA(TestCase):
+class TestSolutionA(TestSolution):
 
     def setUp(self):
         self.solution = SolutionA()
