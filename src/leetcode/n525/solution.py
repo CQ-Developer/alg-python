@@ -14,7 +14,7 @@ class SolutionA(Solution):
 
     @override
     def find_max_length(self, nums: list[int]) -> int:
-        nums = [1 if x else -1 for x in nums]
+        nums = [x * 2 - 1 for x in nums]
         ps = list(accumulate(nums, initial=0))
         tab = {}
         mx = 0
@@ -32,7 +32,7 @@ class SolutionB(Solution):
         p = mx = 0
         tb = {0: -1}
         for i, x in enumerate(nums):
-            p += 1 if x else -1
+            p += x * 2 - 1
             if p in tb:
                 mx = max(mx, i - tb[p])
             else:
