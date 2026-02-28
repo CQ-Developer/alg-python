@@ -28,5 +28,11 @@
         "-s", "test",
         "-p", "test_*.py"
     ],
-    "python.terminal.activateEnvironment": true
+    "python.terminal.activateEnvironment": true,
+    "editor.codeActionsOnSave": {
+        "source.convertImportFormat": "explicit",
+        "source.convertImportStar": "explicit",
+        "source.unusedImports": "explicit",
+        "source.renameShadowedStdlibImports": "explicit"
+    }
 }
