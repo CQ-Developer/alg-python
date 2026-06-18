@@ -1,6 +1,0 @@
-#!/bin/bash
-
-curl -LsSf https://astral.sh/uv/install.sh | sh
-uv python install 3.11 --default
-
-rm -f ./init.sh
