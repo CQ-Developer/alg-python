@@ -1,23 +1,27 @@
-from src.leetcode.n560.solution import Solution, SolutionA
+from src.leetcode.n560.solution import Solution, SolutionA, SolutionB
 from unittest import TestCase, SkipTest
 
 
 class TestSolution(TestCase):
-    solution: Solution
+	solution: Solution
 
-    @classmethod
-    def setUpClass(cls):
-        if cls is TestSolution:
-            raise SkipTest("abc")
+	@classmethod
+	def setUpClass(cls):
+		if cls is TestSolution:
+			raise SkipTest('abc')
 
-    def test_a(self):
-        self.assertEqual(2, self.solution.subarray_sum([1, 1, 1], 2))
+	def test_a(self):
+		self.assertEqual(2, self.solution.subarray_sum([1, 1, 1], 2))
 
-    def test_b(self):
-        self.assertEqual(2, self.solution.subarray_sum([1, 2, 3], 3))
+	def test_b(self):
+		self.assertEqual(2, self.solution.subarray_sum([1, 2, 3], 3))
 
 
 class TestSolutionA(TestSolution):
+	def setUp(self):
+		self.solution = SolutionA()
 
-    def setUp(self):
-        self.solution = SolutionA()
+
+class TestSolutionB(TestSolution):
+	def setUp(self):
+		self.solution = SolutionB()
