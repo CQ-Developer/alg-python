@@ -3,6 +3,9 @@ from typing import override
 
 
 class Solution(ABC):
+    """
+    连续的子数组和
+    """
 
     @abstractmethod
     def check_subarray_sum(self, nums: list[int], k: int) -> bool:
@@ -10,16 +13,19 @@ class Solution(ABC):
 
 
 class SolutionA(Solution):
+    """
+    前缀和 + hash
+    """
 
     @override
     def check_subarray_sum(self, nums: list[int], k: int) -> bool:
-        p = 0
+        pre = 0
         cnt = {0: -1}
         for i, x in enumerate(nums):
-            p = (p + x) % k
-            if p in cnt:
-                if i - cnt[p] >= 2:
+            pre = (pre + x) % k
+            if pre in cnt:
+                if i - cnt[pre] >= 2:
                     return True
             else:
-                cnt[p] = i
+                cnt[pre] = i
         return False
