@@ -3,6 +3,9 @@ from typing import override
 
 
 class Solution(ABC):
+    """
+    和为奇数的子数组数目
+    """
 
     @abstractmethod
     def num_of_subarrays(self, arr: list[int]) -> int:
@@ -10,6 +13,11 @@ class Solution(ABC):
 
 
 class SolutionA(Solution):
+    """
+    前缀和：
+        奇数 - 偶数 = 奇数
+        偶数 - 奇数 = 奇数
+    """
 
     @override
     def num_of_subarrays(self, arr: list[int]) -> int:
