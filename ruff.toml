@@ -2,4 +2,4 @@ line-length = 180
 
 [format]
 quote-style = "single"
-indent-style = "tab"
+indent-style = "space"
