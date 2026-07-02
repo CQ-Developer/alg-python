@@ -1,40 +1,48 @@
-from abc import ABC, abstractmethod
-from typing import override
-from itertools import accumulate
+import abc
+import itertools
+import typing
 
 
-class Solution(ABC):
+class Solution(abc.ABC):
+    """
+    找到含有相同数量的0和1的最长连续子数组的长度
+    """
 
-    @abstractmethod
+    @abc.abstractmethod
     def find_max_length(self, nums: list[int]) -> int:
         pass
 
 
 class SolutionA(Solution):
+    """
+    前缀和
+    """
 
-    @override
+    @typing.override
     def find_max_length(self, nums: list[int]) -> int:
-        nums = [x * 2 - 1 for x in nums]
-        ps = list(accumulate(nums, initial=0))
+        ans = 0
         tab = {}
-        mx = 0
-        for i, p in enumerate(ps):
-            if p in tab:
-                mx = max(mx, i - tab[p])
+        for i, x in enumerate(itertools.accumulate((x * 2 - 1 for x in nums), initial=0)):
+            if x in tab:
+                ans = max(ans, i - tab[x])
             else:
-                tab[p] = i
-        return mx
+                tab[x] = i
+        return ans
 
 
 class SolutionB(Solution):
+    """
+    前缀和
+    """
 
+    @typing.override
     def find_max_length(self, nums: list[int]) -> int:
-        p = mx = 0
-        tb = {0: -1}
+        ans = pre = 0
+        table = {0: -1}
         for i, x in enumerate(nums):
-            p += x * 2 - 1
-            if p in tb:
-                mx = max(mx, i - tb[p])
+            pre += x * 2 - 1
+            if pre in table:
+                ans = max(ans, i - table[pre])
             else:
-                tb[p] = i
-        return mx
+                table[pre] = i
+        return ans
