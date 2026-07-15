@@ -1,25 +1,31 @@
-from abc import ABC, abstractmethod
-from typing import override
-from math import inf
+import abc
+import math
+import typing
 from collections import defaultdict
 
 
-class Solution(ABC):
+class Solution(abc.ABC):
+    """
+    https://leetcode.cn/problems/maximum-good-subarray-sum/description/
+    """
 
-    @abstractmethod
+    @abc.abstractmethod
     def maximum_subarray_sum(self, nums: list[int], k: int) -> int:
         pass
 
 
 class SolutionA(Solution):
+    """
+    前缀和
+    """
 
-    @override
+    @typing.override
     def maximum_subarray_sum(self, nums: list[int], k: int) -> int:
-        ans = -inf
         s = 0
-        min_s = defaultdict(lambda: inf)
+        a = -math.inf
+        min_s = defaultdict(lambda: math.inf)
         for x in nums:
-            ans = max(ans, s + x - min(min_s[x - k], min_s[x + k]))
+            a = max(a, s + x - min(min_s[x - k], min_s[x + k]))
             min_s[x] = min(min_s[x], s)
             s += x
-        return ans if ans > -inf else 0
+        return int(a) if a > -math.inf else 0
