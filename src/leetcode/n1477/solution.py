@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
 from typing import override
-from itertools import accumulate
 
 
 class Solution(ABC):
+    """
+    求和为 `target` 的不重叠子数组长度的最下和
+    """
 
     @abstractmethod
     def min_sum_of_lengths(self, arr: list[int], target: int) -> int:
@@ -12,23 +14,25 @@ class Solution(ABC):
 
 class SolutionA(Solution):
     """
-    前缀和
+    前缀和 + 动态规划
+    dp[i + 1] = 前i个元素中和为target的子数组的最小长度
     """
 
     @override
     def min_sum_of_lengths(self, arr: list[int], target: int) -> int:
         n = len(arr)
-        p, ans = 0, n + 1
+        p = 0
         cnt = {0: -1}
-        f = [n] * (n + 1)
+        ans = n + 1
+        dp = [n] * (n + 1)
         for i, x in enumerate(arr):
             p += x
             if p - target in cnt:
                 j = cnt[p - target]
-                ans = min(ans, i - j + f[j + 1])
-                f[i + 1] = min(f[i], i - j)
+                ans = min(ans, i - j + dp[j + 1])
+                dp[i + 1] = min(dp[i], i - j)
             else:
-                f[i + 1] = f[i]
+                dp[i + 1] = dp[i]
             cnt[p] = i
         return -1 if ans == n + 1 else ans
 

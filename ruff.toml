@@ -1,4 +1,7 @@
-line-length = 180
+line-length = 120
+
+[lint]
+ignore = ["E741"]
 
 [format]
 quote-style = "single"
