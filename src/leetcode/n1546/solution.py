@@ -1,9 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import override
 from itertools import accumulate
+from typing import override
 
 
 class Solution(ABC):
+    """
+    求非空不重叠子数组最大数目
+    """
 
     @abstractmethod
     def max_non_overlapping(self, nums: list[int], target: int) -> int:
@@ -11,29 +14,37 @@ class Solution(ABC):
 
 
 class SolutionA(Solution):
+    """
+    前缀和 + 贪心
+    """
 
     @override
     def max_non_overlapping(self, nums: list[int], target: int) -> int:
-        p = mx = 0
-        s = set([0])
+        pre = ans = 0
+        cnt = {0}
         for x in nums:
-            p += x
-            if p - target in s:
-                mx += 1
-                s.clear()
-            s.add(p)
-        return mx
+            pre += x
+            if pre - target in cnt:
+                ans += 1
+                cnt = set()
+                cnt.clear()
+            cnt.add(pre)
+        return ans
 
 
 class SolutionB(Solution):
+    """
+    前缀和 + 贪心
+    使用 python 内置函数 accumulate 代替手动计算前缀和
+    """
 
     @override
     def max_non_overlapping(self, nums: list[int], target: int) -> int:
-        mx = 0
-        s = set([0])
-        for x in accumulate(nums):
-            if x - target in s:
-                mx += 1
-                s.clear()
-            s.add(x)
-        return mx
+        ans = 0
+        cnt = {0}
+        for p in accumulate(nums):
+            if p - target in cnt:
+                ans += 1
+                cnt = set()
+            cnt.add(p)
+        return ans
