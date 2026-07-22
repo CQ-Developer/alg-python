@@ -4,19 +4,21 @@ from itertools import accumulate
 
 
 class Solution(ABC):
-
     @abstractmethod
     def longest_WPI(self, hours: list[int]) -> int:
         pass
 
 
 class SolutionA(Solution):
+    """
+    前缀和 + 单调栈
+    """
 
     @override
     def longest_WPI(self, hours: list[int]) -> int:
         n = len(hours)
-        pre = list(accumulate(hours, lambda a, b: a + (1 if b > 8 else -1), initial=0))
         stk = [0]
+        pre = list(accumulate(hours, lambda a, x: a + (1 if x > 8 else -1), initial=0))
         for j in range(1, n + 1):
             if pre[j] < pre[stk[-1]]:
                 stk.append(j)
@@ -28,14 +30,18 @@ class SolutionA(Solution):
 
 
 class SolutionB(Solution):
+    """
+    单调栈 + 前缀和
+    优化: 将前缀和的计算合并到单点找的遍历中
+    """
 
     @override
     def longest_WPI(self, hours: list[int]) -> int:
         n = len(hours)
-        pre = [0] * (n + 1)
         stk = [0]
+        pre = [0]
         for j in range(1, n + 1):
-            pre[j] = pre[j - 1] + (1 if hours[j - 1] > 8 else -1)
+            pre.append(pre[-1] + (1 if hours[j - 1] > 8 else -1))
             if pre[j] < pre[stk[-1]]:
                 stk.append(j)
         ans = 0
@@ -46,37 +52,22 @@ class SolutionB(Solution):
 
 
 class SolutionC(Solution):
+    """
+    前缀和 + hash表
+    利用前缀和每次只±1的特性
+    """
 
     @override
     def longest_WPI(self, hours: list[int]) -> int:
-        h = {0: -1}
-        p = a = 0
+        pre = ans = 0
+        cnt = {0: -1}
         for i, x in enumerate(hours):
-            p += 1 if x > 8 else -1
-            if p > 0:
-                a = i + 1
+            pre += 1 if x > 8 else -1
+            if pre > 0:
+                ans = i + 1
             else:
-                if p - 1 in h:
-                    a = max(a, i - h[p - 1])
-                if p not in h:
-                    h[p] = i
-        return a
-
-
-class SolutionD(Solution):
-
-    @override
-    def longest_WPI(self, hours: list[int]) -> int:
-        n = len(hours)
-        pos = [0] * (n + 2)
-        a = p = 0
-        for i, h in enumerate(hours, start=1):
-            p -= 1 if h > 8 else -1
-            if p < 0:
-                a = i
-            else:
-                if pos[p + 1]:
-                    a = max(a, i - pos[p + 1])
-                if pos[p] == 0:
-                    pos[p] = i
-        return a
+                if pre - 1 in cnt:
+                    ans = max(ans, i - cnt[pre - 1])
+                if pre not in cnt:
+                    cnt[pre] = i
+        return ans
