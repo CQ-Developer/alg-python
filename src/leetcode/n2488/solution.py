@@ -1,9 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import override
 from collections import defaultdict
+from typing import override
 
 
 class Solution(ABC):
+    """
+    求中位数为k的子数组数量
+    """
 
     @abstractmethod
     def count_subarrays(self, nums: list[int], k: int) -> int:
@@ -11,6 +14,9 @@ class Solution(ABC):
 
 
 class SolutionA(Solution):
+    """
+    前缀和 (hash表)
+    """
 
     @override
     def count_subarrays(self, nums: list[int], k: int) -> int:
@@ -33,6 +39,9 @@ class SolutionA(Solution):
 
 
 class SolutionB(Solution):
+    """
+    前缀和 (数组)
+    """
 
     @override
     def count_subarrays(self, nums: list[int], k: int) -> int:
