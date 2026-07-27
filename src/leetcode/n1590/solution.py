@@ -1,44 +1,38 @@
 from abc import ABC, abstractmethod
-from typing import override
 from itertools import accumulate
-from collections import defaultdict
+from typing import override
 
 
 class Solution(ABC):
-
     @abstractmethod
     def min_subarray(self, nums: list[int], p: int) -> int:
         pass
 
 
 class SolutionA(Solution):
-
     @override
     def min_subarray(self, nums: list[int], p: int) -> int:
         pre = list(accumulate(nums, initial=0))
-        s = pre[-1]
-        if s % p == 0:
-            return 0
+        x = pre[-1] % p
         ans = n = len(nums)
-        last = defaultdict(lambda: -n)
-        for i, x in enumerate(pre):
-            last[(x + s) % p] = i
-            ans = min(ans, i - last[x % p])
+        last = {}
+        for i, v in enumerate(pre):
+            last[v % p] = i
+            j = last.get((v - x) % p, -n)
+            ans = min(ans, i - j)
         return ans if ans < n else -1
 
 
 class SolutionB(Solution):
-
     @override
     def min_subarray(self, nums: list[int], p: int) -> int:
-        s = sum(nums) % p
-        if s == 0:
-            return 0
-        x = 0
+        x = sum(nums) % p
+        s = 0
         ans = n = len(nums)
-        last = {s: -1}
+        last = {0: -1}
         for i, v in enumerate(nums):
-            x = (x + v) % p
-            last[(x + s) % p] = i
-            ans = min(ans, i - last.get(x, -n))
+            s += v
+            last[s % p] = i
+            j = last.get((s - x) % p, -n)
+            ans = min(ans, i - j)
         return ans if ans < n else -1
