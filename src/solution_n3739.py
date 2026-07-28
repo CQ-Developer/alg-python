@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 from collections import defaultdict
 from typing import override
 
+from sortedcontainers import SortedList
+
 
 class Solution(ABC):
     @abstractmethod
@@ -14,16 +16,16 @@ class SolutionA(Solution):
     def count_majority_subarrays(self, nums: list[int], target: int) -> int:
         cnt = defaultdict(int)
         cnt[0] = 1
-        ans = s = f = 0
+        ans = pre = f = 0
         for x in nums:
             if x == target:
-                f += cnt[s]
-                s += 1
+                f += cnt[pre]
+                pre += 1
             else:
-                s -= 1
-                f -= cnt[s]
+                pre -= 1
+                f -= cnt[pre]
             ans += f
-            cnt[s] += 1
+            cnt[pre] += 1
         return ans
 
 
@@ -43,4 +45,16 @@ class SolutionB(Solution):
                 f -= cnt[s]
             ans += f
             cnt[s] += 1
+        return ans
+
+
+class SolutionC(Solution):
+    @override
+    def count_majority_subarrays(self, nums: list[int], target: int) -> int:
+        cnt = SortedList([0])
+        ans = pre = 0
+        for x in nums:
+            pre += 1 if x == target else -1
+            ans += cnt.bisect_left(pre)
+            cnt.add(pre)
         return ans
