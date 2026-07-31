@@ -3,20 +3,7 @@
 		"editor.defaultFormatter": "charliermarsh.ruff",
 		"editor.formatOnSave": true
 	},
-	"python.analysis.typeCheckingMode": "standard",
-	"python.analysis.extraPaths": [ "src", "test" ],
-	"python.analysis.diagnosticSeverityOverrides": {
-		"reportIncompatibleMethodOverride": "warning",
-		"reportUnknownLambdaType": "warning",
-		"reportOptionalMemberAccess": "warning",
-		"reportArgumentType": "warning",
-		"reportCallIssue": "warning",
-		"reportOptionalSubscript": "warning",
-		"reportGeneralTypeIssues": "warning",
-		"reportReturnType": "warning"
-	},
     "python.testing.pytestEnabled": true,
-    "python.testing.pytestArgs": [ "-v", "-s", "test" ],
 	"python.terminal.activateEnvironment": true,
 	"editor.codeActionsOnSave": {
         "source.organizeImports.ruff": "explicit",

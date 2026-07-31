@@ -1,0 +1,15 @@
+{
+    "include": [ "src", "test" ],
+    "extraPaths": [ "." ],
+    "venvPath": ".",
+    "venv": ".venv",
+    "typeCheckingMode": "standard",
+    "reportIncompatibleMethodOverride": "warning",
+    "reportUnknownLambdaType": "warning",
+    "reportOptionalMemberAccess": "warning",
+    "reportArgumentType": "warning",
+    "reportCallIssue": "warning",
+    "reportOptionalSubscript": "warning",
+    "reportGeneralTypeIssues": "warning",
+    "reportReturnType": "warning"
+}
