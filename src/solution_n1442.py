@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from collections import defaultdict
+from collections import Counter
 from itertools import accumulate
 from operator import xor
 from typing import override
@@ -28,20 +28,19 @@ class SolutionB(Solution):
     @override
     def count_triplets(self, arr: list[int]) -> int:
         p = list(accumulate(arr, xor, initial=0))
-        ans, n = 0, len(arr)
+        a, n = 0, len(arr)
         for i in range(n):
             for k in range(i + 1, n):
                 if p[k + 1] == p[i]:
-                    ans += k - i
-        return ans
+                    a += k - i
+        return a
 
 
 class SolutionC(Solution):
     @override
     def count_triplets(self, arr: list[int]) -> int:
-        cnt = defaultdict(int)
-        all = defaultdict(int)
-        ans = pre = 0
+        cnt, all = Counter(), Counter()
+        pre = ans = 0
         for i, x in enumerate(arr):
             cnt[pre] += 1
             all[pre] += i
