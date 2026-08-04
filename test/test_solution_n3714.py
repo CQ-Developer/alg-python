@@ -1,9 +1,9 @@
 from pytest import fixture
 
-from src.solution_n3714 import Solution, SolutionA
+from src.solution_n3714 import Solution, SolutionA, SolutionB
 
 
-@fixture(scope='module', params=[SolutionA])
+@fixture(scope='module', params=[SolutionA, SolutionB])
 def solution(request) -> Solution:
     return request.param()
 
