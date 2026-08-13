@@ -4,5 +4,5 @@ line-length = 120
 ignore = ["E741"]
 
 [format]
-quote-style = "single"
+quote-style = "double"
 indent-style = "space"
