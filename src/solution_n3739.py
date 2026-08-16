@@ -6,55 +6,52 @@ from sortedcontainers import SortedList
 
 
 class Solution(ABC):
+    """
+    给你一个整数数组 nums 和一个整数 target
+    返回数组 nums 中满足 target 是主要元素的子数组数目
+    一个子数组的主要元素是指该元素在该子数组中出现的次数严格大于其长度的一半
+    子数组是数组中一段连续且非空的元素序列
+    """
+
     @abstractmethod
     def count_majority_subarrays(self, nums: list[int], target: int) -> int:
         pass
 
 
 class SolutionA(Solution):
+    """
+    前缀和 + 有序集合
+    """
+
     @override
     def count_majority_subarrays(self, nums: list[int], target: int) -> int:
-        cnt = defaultdict(int)
-        cnt[0] = 1
-        ans = pre = f = 0
+        sl = SortedList([0])
+        ans = s = 0
         for x in nums:
-            if x == target:
-                f += cnt[pre]
-                pre += 1
-            else:
-                pre -= 1
-                f -= cnt[pre]
-            ans += f
-            cnt[pre] += 1
+            s += 1 if x == target else -1
+            ans += sl.bisect_left(s)
+            sl.add(s)
         return ans
 
 
 class SolutionB(Solution):
-    @override
+    """
+    前缀和 + 动态规划
+    f[j] = f[j - 1] + cnt[p[j - 1]]
+    f[j] = f[j - 1] - cnt[p[j]]
+    """
+
     def count_majority_subarrays(self, nums: list[int], target: int) -> int:
-        s = n = len(nums)
-        cnt = [0] * (2 * n + 1)
-        cnt[n] = 1
-        ans = f = 0
+        cnt = defaultdict(int)
+        cnt[0] = 1
+        ans = p = f = 0
         for x in nums:
-            if target == x:
-                f += cnt[s]
-                s += 1
+            if x == target:
+                f += cnt[p]
+                p += 1
             else:
-                s -= 1
-                f -= cnt[s]
+                p -= 1
+                f -= cnt[p]
             ans += f
-            cnt[s] += 1
-        return ans
-
-
-class SolutionC(Solution):
-    @override
-    def count_majority_subarrays(self, nums: list[int], target: int) -> int:
-        cnt = SortedList([0])
-        ans = pre = 0
-        for x in nums:
-            pre += 1 if x == target else -1
-            ans += cnt.bisect_left(pre)
-            cnt.add(pre)
+            cnt[p] += 1
         return ans
