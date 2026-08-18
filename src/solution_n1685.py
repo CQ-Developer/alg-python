@@ -45,6 +45,6 @@ class SolutionB(Solution):
         ans = []
         for i, x in enumerate(nums):
             a = x * i - pre[i]
-            b = (pre[n] - pre[i + 1]) - x * (n - i - 1)
+            b = (pre[n] - pre[i]) - x * (n - i)
             ans.append(a + b)
         return ans
