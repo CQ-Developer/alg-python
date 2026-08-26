@@ -20,7 +20,7 @@ class SolutionA(Solution):
     def longest_awesome(self, s: str) -> int:
         pos = {0: -1}
         st = ans = 0
-        for i, x in enumerate(map(int, s)):
+        for i, x in enumerate(int(c) for c in s):
             st ^= 1 << x
             # 奇数
             for j in range(10):
