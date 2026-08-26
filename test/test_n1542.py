@@ -1,6 +1,6 @@
 import pytest
 
-from src.solution_n1542 import Solution, SolutionA
+from src.n1542 import Solution, SolutionA
 
 
 @pytest.fixture(scope="module", params=[SolutionA])
