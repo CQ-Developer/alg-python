@@ -3,7 +3,7 @@ from pytest import fixture
 from src.n1031 import Solution, SolutionA, SolutionB
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
+@fixture(scope="module", params=[SolutionA, SolutionB])
 def solution(request) -> Solution:
     return request.param()
 
