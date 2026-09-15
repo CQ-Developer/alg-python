@@ -1,6 +1,6 @@
 import pytest
 
-from src.n1816 import Solution, SolutionA
+from src.n1862 import Solution, SolutionA
 
 
 @pytest.fixture(params=[SolutionA])

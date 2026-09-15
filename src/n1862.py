@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from itertools import accumulate
 from typing import override
 
 
@@ -17,4 +18,18 @@ class Solution(ABC):
 class SolutionA(Solution):
     @override
     def sum_of_floored_pairs(self, nums: list[int]) -> int:
-        return 0
+        mx = max(nums)
+        cnt = [0] * (mx + 1)
+        for x in nums:
+            cnt[x] += 1
+        s = list(accumulate(cnt, initial=0))
+        ans = 0
+        # 分母
+        for i in range(1, mx + 1):
+            cnt_i = cnt[i]
+            if cnt_i:
+                # 分子
+                for j in range(0, mx + 1, i):
+                    cnt_j = s[min(mx + 1, j + i)] - s[j]
+                    ans = (ans + (j // i) * cnt_i * cnt_j) % 1_000_000_007
+        return ans
