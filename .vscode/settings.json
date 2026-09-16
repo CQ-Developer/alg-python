@@ -1,12 +1,9 @@
 {
-	"[python]": {
-		"editor.defaultFormatter": "charliermarsh.ruff",
-		"editor.formatOnSave": true
-	},
-    "python.testing.pytestEnabled": true,
-	"python.terminal.activateEnvironment": true,
-	"editor.codeActionsOnSave": {
-        "source.organizeImports.ruff": "explicit",
-        "source.unusedImports": "explicit"
-	}
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true
+    },
+    "python.analysis.autoImportCompletions": true,
+    "python.terminal.activateEnvironment": true,
+    "python.testing.pytestEnabled": true
 }

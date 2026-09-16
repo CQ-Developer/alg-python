@@ -1,15 +1,16 @@
 {
-    "include": [ "src", "test" ],
     "extraPaths": [ "." ],
-    "venvPath": ".",
-    "venv": ".venv",
-    "typeCheckingMode": "standard",
-    "reportIncompatibleMethodOverride": "warning",
-    "reportUnknownLambdaType": "warning",
-    "reportOptionalMemberAccess": "warning",
+    "include": [ "src", "test" ],
+    "pythonVersion": "3.14",
     "reportArgumentType": "warning",
     "reportCallIssue": "warning",
-    "reportOptionalSubscript": "warning",
     "reportGeneralTypeIssues": "warning",
-    "reportReturnType": "warning"
+    "reportIncompatibleMethodOverride": "warning",
+    "reportOptionalMemberAccess": "warning",
+    "reportOptionalSubscript": "warning",
+    "reportReturnType": "warning",
+    "reportUnknownLambdaType": "warning",
+    "typeCheckingMode": "standard",
+    "venv": ".venv",
+    "venvPath": "."
 }
