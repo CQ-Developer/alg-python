@@ -14,7 +14,7 @@ class TestCase(TypedDict):
 
 
 def _load_test_cases() -> list[TestCase]:
-    file_path = Path(__file__).parent / "test_n1738.json"
+    file_path = Path(__file__).parent / "cases" / "test_n1738.json"
     with open(file_path, "r") as f:
         return json.load(f)
 
