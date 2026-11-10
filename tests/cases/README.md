@@ -1,13 +1,15 @@
 # Test case format
 
-Every `tests/test_nXXX.py` module loads its data from
-`tests/cases/nXXX.json` through `tests.case_loader.load_cases`.
-The `test_` prefix is removed from the test module name to form the case file
-name.
+Each `tests/test_nXXX.py` module is self-contained:
 
-`load_cases` returns `Case` objects whose values are deep-copied on access, so
-in-place solutions cannot mutate the shared case data between solution
-variants.
+- it defines its own `TestCase(TypedDict)`
+- it defines its own `_load_test_cases()` and reads `tests/cases/nXXX.json`
+- it deep-copies the case before using it
+- it defines any tree/list helpers it needs
+
+The `test_` prefix is removed from the test module name to form the case file
+name. `TestCase` sets `__test__ = False` so pytest does not try to collect it as
+a test class.
 
 ## Regular problems
 

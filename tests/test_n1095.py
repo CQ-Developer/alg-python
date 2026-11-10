@@ -1,7 +1,11 @@
+import copy
+import json
+from pathlib import Path
+from typing import TypedDict
+
 import pytest
 
 from src.n1095 import MountainArray, Solution, SolutionA
-from tests.case_loader import Case, load_cases
 
 
 class FakeMountainArray(MountainArray):
@@ -15,12 +19,26 @@ class FakeMountainArray(MountainArray):
         return len(self._arr)
 
 
+class TestCase(TypedDict):
+    __test__ = False
+    arr: list[int]
+    target: int
+    expected: int
+
+
+def _load_test_cases() -> list[TestCase]:
+    case_name = Path(__file__).stem.removeprefix("test_")
+    case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
+    return json.loads(case_file.read_text(encoding="utf-8"))
+
+
 @pytest.fixture(params=[SolutionA])
 def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-@pytest.mark.parametrize("case", load_cases(__file__))
-def test_find_in_mountain_array(solution: Solution, case: Case):
+@pytest.mark.parametrize("case", _load_test_cases())
+def test_find_in_mountain_array(solution: Solution, case: TestCase):
+    case = copy.deepcopy(case)
     mountain_array = FakeMountainArray(case["arr"])
     assert solution.find_in_mountain_array(case["target"], mountain_array) == case["expected"]

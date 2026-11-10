@@ -1,8 +1,48 @@
+import copy
+import json
+from pathlib import Path
+from typing import TypedDict
+
 import pytest
 
 from src.n222 import Solution, SolutionA, SolutionB, SolutionC, SolutionD, TreeNode
-from tests.case_loader import Case, load_cases
-from tests.serde import build_tree
+
+
+class TestCase(TypedDict):
+    __test__ = False
+    root: list[int] | None
+    expected: int
+
+
+def _load_test_cases() -> list[TestCase]:
+    case_name = Path(__file__).stem.removeprefix("test_")
+    case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
+    return json.loads(case_file.read_text(encoding="utf-8"))
+
+
+def _build_tree(values: list[int | None] | None) -> TreeNode | None:
+    if not values or values[0] is None:
+        return None
+
+    root = TreeNode(values[0])
+    queue: list[TreeNode] = [root]
+    index = 1
+    while index < len(values):
+        node = queue.pop(0)
+        left = values[index]
+        index += 1
+        if left is not None:
+            node.left = TreeNode(left)
+            queue.append(node.left)
+
+        if index < len(values):
+            right = values[index]
+            index += 1
+            if right is not None:
+                node.right = TreeNode(right)
+                queue.append(node.right)
+
+    return root
 
 
 @pytest.fixture(params=[SolutionA, SolutionB, SolutionC, SolutionD])
@@ -10,7 +50,8 @@ def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-@pytest.mark.parametrize("case", load_cases(__file__))
-def test_count_nodes(solution: Solution, case: Case):
-    root = build_tree(TreeNode, case["root"])
+@pytest.mark.parametrize("case", _load_test_cases())
+def test_count_nodes(solution: Solution, case: TestCase):
+    case = copy.deepcopy(case)
+    root = _build_tree(case["root"])
     assert solution.count_nodes(root) == case["expected"]
