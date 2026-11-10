@@ -15,8 +15,7 @@ class Case(TypedDict):
 
 
 def _load_test_cases() -> list[Case]:
-    case_name = Path(__file__).stem.removeprefix("test_")
-    case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
+    case_file = Path(__file__).parent / "cases" / "n1738.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
 
 
