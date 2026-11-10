@@ -8,15 +8,14 @@ import pytest
 from src.n304 import NumMatrix, NumMatrixA, NumMatrixB
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     init: list[list[list[int]]]
     operations: list[str]
     arguments: list[list[int]]
     expected: list[int]
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -28,7 +27,7 @@ def num_matrix_cls(request: pytest.FixtureRequest) -> type[NumMatrix]:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_sum_region(num_matrix_cls: type[NumMatrix], case: TestCase):
+def test_sum_region(num_matrix_cls: type[NumMatrix], case: Case):
     case = copy.deepcopy(case)
     num_matrix = num_matrix_cls(*case["init"])
     actual = [

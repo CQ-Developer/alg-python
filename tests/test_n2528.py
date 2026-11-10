@@ -8,15 +8,14 @@ import pytest
 from src.n2528 import Solution, SolutionA
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     stations: list[int]
     r: int
     k: int
     expected: int
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -28,6 +27,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_max_power(solution: Solution, case: TestCase):
+def test_max_power(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     assert solution.maxPower(case["stations"], case["r"], case["k"]) == case["expected"]

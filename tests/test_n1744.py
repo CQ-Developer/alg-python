@@ -8,14 +8,13 @@ import pytest
 from src.n1744 import Solution, SolutionA
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     candies_count: list[int]
     queries: list[list[int]]
     expected: list[bool]
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -27,6 +26,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_can_eat(solution: Solution, case: TestCase):
+def test_can_eat(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     assert solution.can_eat(case["candies_count"], case["queries"]) == case["expected"]

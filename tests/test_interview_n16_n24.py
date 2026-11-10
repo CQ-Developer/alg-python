@@ -8,14 +8,13 @@ import pytest
 from src.interview_n16_n24 import Solution, SolutionA, SolutionB
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     nums: list[int]
     target: int
     expected: list[list[int]]
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -27,6 +26,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_pair_sums(solution: Solution, case: TestCase):
+def test_pair_sums(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     assert solution.pair_sums(case["nums"], case["target"]) == case["expected"]

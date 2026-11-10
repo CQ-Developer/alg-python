@@ -8,15 +8,14 @@ import pytest
 from src.n901 import StockSpanner, StockSpannerA
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     init: list[Any]
     operations: list[str]
     arguments: list[list[int]]
     expected: list[int]
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -28,7 +27,7 @@ def stock_spanner_cls(request: pytest.FixtureRequest) -> type[StockSpanner]:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_stock_spanner(stock_spanner_cls: type[StockSpanner], case: TestCase):
+def test_stock_spanner(stock_spanner_cls: type[StockSpanner], case: Case):
     case = copy.deepcopy(case)
     stock_spanner = stock_spanner_cls(*case["init"])
     actual = [

@@ -19,14 +19,13 @@ class FakeMountainArray(MountainArray):
         return len(self._arr)
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     arr: list[int]
     target: int
     expected: int
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -38,7 +37,7 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_find_in_mountain_array(solution: Solution, case: TestCase):
+def test_find_in_mountain_array(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     mountain_array = FakeMountainArray(case["arr"])
     assert solution.find_in_mountain_array(case["target"], mountain_array) == case["expected"]

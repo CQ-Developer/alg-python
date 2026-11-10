@@ -8,13 +8,12 @@ import pytest
 from src.n1130 import Solution, SolutionA, SolutionB, SolutionC
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     arr: list[int]
     expected: int
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -26,6 +25,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_mct_from_leaf_values(solution: Solution, case: TestCase):
+def test_mct_from_leaf_values(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     assert solution.mct_from_leaf_values(case["arr"]) == case["expected"]

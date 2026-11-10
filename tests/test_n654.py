@@ -8,13 +8,12 @@ import pytest
 from src.n654 import Solution, SolutionA, SolutionB, TreeNode
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     nums: list[int]
     expected: list[int | None]
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -49,7 +48,7 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_construct_maximum_binary_tree(solution: Solution, case: TestCase):
+def test_construct_maximum_binary_tree(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     result = solution.construct_maximum_binary_tree(case["nums"])
     assert _tree_to_list(result) == case["expected"]

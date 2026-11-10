@@ -8,13 +8,12 @@ import pytest
 from src.n1542 import Solution, SolutionA
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     s: str
     expected: int
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -26,6 +25,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_longest_awesome(solution: Solution, case: TestCase):
+def test_longest_awesome(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     assert solution.longest_awesome(case["s"]) == case["expected"]

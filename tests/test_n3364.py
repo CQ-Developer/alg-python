@@ -8,15 +8,14 @@ import pytest
 from src.n3364 import Solution, SolutionA, SolutionB
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     nums: list[int]
     l: int
     r: int
     expected: int
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -28,6 +27,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_minimum_sum_subarray(solution: Solution, case: TestCase):
+def test_minimum_sum_subarray(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     assert solution.minimum_sum_subarray(case["nums"], case["l"], case["r"]) == case["expected"]

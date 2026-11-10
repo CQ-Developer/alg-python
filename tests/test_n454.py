@@ -8,8 +8,7 @@ import pytest
 from src.n454 import Solution, SolutionA
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     nums1: list[int]
     nums2: list[int]
     nums3: list[int]
@@ -17,7 +16,7 @@ class TestCase(TypedDict):
     expected: int
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -29,6 +28,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_four_sum_count(solution: Solution, case: TestCase):
+def test_four_sum_count(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     assert solution.four_sum_count(case["nums1"], case["nums2"], case["nums3"], case["nums4"]) == case["expected"]

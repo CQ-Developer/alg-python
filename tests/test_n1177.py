@@ -8,14 +8,13 @@ import pytest
 from src.n1177 import Solution, SolutionA, SolutionB, SolutionC
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     s: str
     queries: list[list[int]]
     expected: list[bool]
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -27,6 +26,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_can_make_pali_queries(solution: Solution, case: TestCase):
+def test_can_make_pali_queries(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     assert solution.can_make_pali_queries(case["s"], case["queries"]) == case["expected"]

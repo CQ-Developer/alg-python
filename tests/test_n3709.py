@@ -8,15 +8,14 @@ import pytest
 from src.n3709 import ExamTracker, ExamTrackerA
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     init: list[Any]
     operations: list[str]
     arguments: list[list[int]]
     expected: list[int | None]
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -28,7 +27,7 @@ def exam_tracker_cls(request: pytest.FixtureRequest) -> type[ExamTracker]:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_exam_tracker(exam_tracker_cls: type[ExamTracker], case: TestCase):
+def test_exam_tracker(exam_tracker_cls: type[ExamTracker], case: Case):
     case = copy.deepcopy(case)
     exam_tracker = exam_tracker_cls(*case["init"])
     actual = [

@@ -2,14 +2,13 @@
 
 Each `tests/test_nXXX.py` module is self-contained:
 
-- it defines its own `TestCase(TypedDict)`
+- it defines its own `Case(TypedDict)`
 - it defines its own `_load_test_cases()` and reads `tests/cases/nXXX.json`
 - it deep-copies the case before using it
 - it defines any tree/list helpers it needs
 
 The `test_` prefix is removed from the test module name to form the case file
-name. `TestCase` sets `__test__ = False` so pytest does not try to collect it as
-a test class.
+name.
 
 ## Regular problems
 

@@ -8,13 +8,12 @@ import pytest
 from src.n222 import Solution, SolutionA, SolutionB, SolutionC, SolutionD, TreeNode
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     root: list[int] | None
     expected: int
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -51,7 +50,7 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_count_nodes(solution: Solution, case: TestCase):
+def test_count_nodes(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     root = _build_tree(case["root"])
     assert solution.count_nodes(root) == case["expected"]

@@ -8,22 +8,21 @@ import pytest
 from src.n1472 import BrowserHistory
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     init: list[str]
     operations: list[str]
     arguments: list[list[int] | list[str]]
     expected: list[str | None]
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_browser_history(case: TestCase):
+def test_browser_history(case: Case):
     case = copy.deepcopy(case)
     browser_history = BrowserHistory(*case["init"])
     actual = [

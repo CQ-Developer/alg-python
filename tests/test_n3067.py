@@ -8,14 +8,13 @@ import pytest
 from src.n3067 import Solution, SolutionA, SolutionB
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     edges: list[list[int]]
     signalSpeed: int
     expected: list[int]
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -27,6 +26,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_count_pairs_of_connectable_servers(solution: Solution, case: TestCase):
+def test_count_pairs_of_connectable_servers(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     assert solution.count_pairs_of_connectable_servers(case["edges"], case["signalSpeed"]) == case["expected"]

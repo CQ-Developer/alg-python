@@ -8,14 +8,13 @@ import pytest
 from src.n402 import Solution, SolutionA
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     num: str
     k: int
     expected: str
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -27,6 +26,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_remove_k_digits(solution: Solution, case: TestCase):
+def test_remove_k_digits(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     assert solution.remove_k_digits(case["num"], case["k"]) == case["expected"]

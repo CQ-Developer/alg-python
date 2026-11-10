@@ -8,14 +8,13 @@ import pytest
 from src.n1760 import Solution
 
 
-class TestCase(TypedDict):
-    __test__ = False
+class Case(TypedDict):
     nums: list[int]
     maxOperations: int
     expected: int
 
 
-def _load_test_cases() -> list[TestCase]:
+def _load_test_cases() -> list[Case]:
     case_name = Path(__file__).stem.removeprefix("test_")
     case_file = Path(__file__).parent / "cases" / f"{case_name}.json"
     return json.loads(case_file.read_text(encoding="utf-8"))
@@ -27,6 +26,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
 
 
 @pytest.mark.parametrize("case", _load_test_cases())
-def test_minimum_size(solution: Solution, case: TestCase):
+def test_minimum_size(solution: Solution, case: Case):
     case = copy.deepcopy(case)
     assert solution.minimumSize(case["nums"], case["maxOperations"]) == case["expected"]
