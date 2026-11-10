@@ -1,0 +1,14 @@
+[
+  {
+    "word": "aba",
+    "expected": 4
+  },
+  {
+    "word": "aabb",
+    "expected": 9
+  },
+  {
+    "word": "he",
+    "expected": 2
+  }
+]

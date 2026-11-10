@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2506 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 2 == solution.similar_pairs(['aba', 'aabb', 'abcd', 'bac', 'aabc'])
-
-
-def test_2(solution: Solution):
-    assert 3 == solution.similar_pairs(['aabb', 'ab', 'ba'])
-
-
-def test_3(solution: Solution):
-    assert 0 == solution.similar_pairs(['nba', 'cba', 'dba'])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_similar_pairs(solution: Solution, case: Case):
+    assert solution.similar_pairs(case["words"]) == case["expected"]

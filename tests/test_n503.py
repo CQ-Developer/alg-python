@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n503 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert [2, -1, 2] == solution.next_greater_elements([1, 2, 1])
-
-
-def test_2(solution: Solution):
-    assert [2, 3, 4, -1, 4] == solution.next_greater_elements([1, 2, 3, 4, 3])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_next_greater_elements(solution: Solution, case: Case):
+    assert solution.next_greater_elements(case["nums"]) == case["expected"]

@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2001 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 6 == solution.interchangeable_rectangles([[4, 8], [3, 6], [10, 20], [15, 30]])
-
-
-def test_2(solution: Solution):
-    assert 0 == solution.interchangeable_rectangles([[4, 5], [7, 8]])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_interchangeable_rectangles(solution: Solution, case: Case):
+    assert solution.interchangeable_rectangles(case["rectangles"]) == case["expected"]

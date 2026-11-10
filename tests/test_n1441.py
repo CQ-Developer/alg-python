@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1441 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert ['Push', 'Push', 'Pop', 'Push'] == solution.build_array([1, 3], 3)
-
-
-def test_2(solution: Solution):
-    assert ['Push', 'Push', 'Push'] == solution.build_array([1, 2, 3], 3)
-
-
-def test_3(solution: Solution):
-    assert ['Push', 'Push'] == solution.build_array([1, 2], 4)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_build_array(solution: Solution, case: Case):
+    assert solution.build_array(case["target"], case["n"]) == case["expected"]

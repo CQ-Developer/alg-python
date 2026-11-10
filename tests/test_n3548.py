@@ -1,24 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3548 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert solution.can_partition_grid([[1, 4], [2, 3]])
-
-
-def test_b(solution: Solution):
-    assert solution.can_partition_grid([[1, 2], [3, 4]])
-
-
-def test_c(solution: Solution):
-    assert not solution.can_partition_grid([[1, 2, 4], [2, 3, 5]])
-
-
-def test_d(solution: Solution):
-    assert not solution.can_partition_grid([[4, 1, 8], [3, 2, 6]])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_can_partition_grid(solution: Solution, case: Case):
+    assert solution.can_partition_grid(case["grid"]) == case["expected"]

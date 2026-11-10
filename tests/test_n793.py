@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n793 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 5 == solution.preimageSizeFZF(0)
-
-
-def test_2(solution: Solution):
-    assert 0 == solution.preimageSizeFZF(5)
-
-
-def test_3(solution: Solution):
-    assert 5 == solution.preimageSizeFZF(3)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_preimage_size_f_z_f(solution: Solution, case: Case):
+    assert solution.preimageSizeFZF(case["k"]) == case["expected"]

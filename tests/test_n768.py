@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n768 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 1 == solution.max_chunks_to_sorted([5, 4, 3, 2, 1])
-
-
-def test_2(solution: Solution):
-    assert 4 == solution.max_chunks_to_sorted([2, 1, 3, 4, 4])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_max_chunks_to_sorted(solution: Solution, case: Case):
+    assert solution.max_chunks_to_sorted(case["arr"]) == case["expected"]

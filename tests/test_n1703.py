@@ -1,21 +1,14 @@
 import pytest
 
 from src.n1703 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@pytest.fixture(scope="module", params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-@pytest.mark.parametrize(
-    ["nums", "k", "expected"],
-    [([1, 0, 0, 1, 0, 1], 2, 1), ([1, 0, 0, 0, 0, 0, 1, 1], 3, 5), ([1, 1, 0, 1], 2, 0)],
-)
-def test_min_moves(
-    solution: Solution,
-    nums: list[int],
-    k: int,
-    expected: int,
-):
-    assert solution.min_moves(nums, k) == expected
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_min_moves(solution: Solution, case: Case):
+    assert solution.min_moves(case["nums"], case["k"]) == case["expected"]

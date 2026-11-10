@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.interview_n16_n24 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert [[5, 6]] == solution.pair_sums([5, 6, 5], 11)
-
-
-def test_2(solution: Solution):
-    assert [[5, 6], [5, 6]] == solution.pair_sums([5, 6, 5, 6], 11)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_pair_sums(solution: Solution, case: Case):
+    assert solution.pair_sums(case["nums"], case["target"]) == case["expected"]

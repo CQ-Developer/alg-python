@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1277 import Solution, SolutionA, SolutionB, SolutionC, SolutionD
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB, SolutionC, SolutionD])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB, SolutionC, SolutionD])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert 15 == solution.count_squares([[0, 1, 1, 1], [1, 1, 1, 1], [0, 1, 1, 1]])
-
-
-def test_b(solution: Solution):
-    assert 7 == solution.count_squares([[1, 0, 1], [1, 1, 0], [1, 1, 0]])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_count_squares(solution: Solution, case: Case):
+    assert solution.count_squares(case["matrix"]) == case["expected"]

@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n844 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert solution.backspace_compare('ab#c', 'ad#c')
-
-
-def test_2(solution: Solution):
-    assert solution.backspace_compare('ab##', 'c#d#')
-
-
-def test_3(solution: Solution):
-    assert not solution.backspace_compare('a#c', 'b')
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_backspace_compare(solution: Solution, case: Case):
+    assert solution.backspace_compare(case["s"], case["t"]) == case["expected"]

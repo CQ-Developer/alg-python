@@ -1,18 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n363 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope="module", params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    matrix = [[1, 0, 1], [0, -2, 3]]
-    assert 2 == solution.max_sum_submatrix(matrix, 2)
-
-
-def test_2(solution: Solution):
-    matrix = [[2, 2, -1]]
-    assert 3 == solution.max_sum_submatrix(matrix, 3)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_max_sum_submatrix(solution: Solution, case: Case):
+    assert solution.max_sum_submatrix(case["matrix"], case["k"]) == case["expected"]

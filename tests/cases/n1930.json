@@ -1,0 +1,14 @@
+[
+  {
+    "s": "aabca",
+    "expected": 3
+  },
+  {
+    "s": "adc",
+    "expected": 0
+  },
+  {
+    "s": "bbcbaba",
+    "expected": 4
+  }
+]

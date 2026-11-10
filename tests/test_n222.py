@@ -1,22 +1,16 @@
-from pytest import fixture
+import pytest
 
 from src.n222 import Solution, SolutionA, SolutionB, SolutionC, SolutionD, TreeNode
+from tests.case_loader import Case, load_cases
+from tests.serde import build_tree
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB, SolutionC, SolutionD])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB, SolutionC, SolutionD])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    root = TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5)), TreeNode(3, TreeNode(6)))
-    assert 6 == solution.count_nodes(root)
-
-
-def test_2(solution: Solution):
-    assert 0 == solution.count_nodes(None)
-
-
-def test_3(solution: Solution):
-    root = TreeNode(1)
-    assert 1 == solution.count_nodes(root)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_count_nodes(solution: Solution, case: Case):
+    root = build_tree(TreeNode, case["root"])
+    assert solution.count_nodes(root) == case["expected"]

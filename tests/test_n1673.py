@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1673 import Solution, SolutonA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutonA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutonA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert [2, 6] == solution.most_competitive([3, 5, 2, 6], 2)
-
-
-def test_b(solution: Solution):
-    assert [2, 3, 3, 4] == solution.most_competitive([2, 4, 3, 3, 5, 4, 9, 6], 4)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_most_competitive(solution: Solution, case: Case):
+    assert solution.most_competitive(case["nums"], case["k"]) == case["expected"]

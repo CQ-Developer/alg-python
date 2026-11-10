@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n739 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert [1, 1, 4, 2, 1, 1, 0, 0] == solution.daily_temperatures([73, 74, 75, 71, 69, 72, 76, 73])
-
-
-def test_2(solution: Solution):
-    assert [1, 1, 0] == solution.daily_temperatures([30, 60, 90])
-
-
-def test_3(solution: Solution):
-    assert [1, 1, 1, 0] == solution.daily_temperatures([30, 40, 50, 60])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_daily_temperatures(solution: Solution, case: Case):
+    assert solution.daily_temperatures(case["temperatures"]) == case["expected"]

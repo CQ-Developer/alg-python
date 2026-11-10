@@ -1,18 +1,19 @@
-from pytest import fixture
+import pytest
 
 from src.n901 import StockSpanner, StockSpannerA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[StockSpannerA])
-def solution(request) -> Solution:
-    return request.param()
+@pytest.fixture(params=[StockSpannerA])
+def stock_spanner_cls(request: pytest.FixtureRequest) -> type[StockSpanner]:
+    return request.param
 
 
-def test_1(solution: Solution):
-    assert 1 == solution.next(100)
-    assert 1 == solution.next(80)
-    assert 1 == solution.next(60)
-    assert 2 == solution.next(70)
-    assert 1 == solution.next(60)
-    assert 4 == solution.next(75)
-    assert 6 == solution.next(85)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_stock_spanner(stock_spanner_cls: type[StockSpanner], case: Case):
+    stock_spanner = stock_spanner_cls(*case["init"])
+    actual = [
+        getattr(stock_spanner, operation)(*arguments)
+        for operation, arguments in zip(case["operations"], case["arguments"])
+    ]
+    assert actual == case["expected"]

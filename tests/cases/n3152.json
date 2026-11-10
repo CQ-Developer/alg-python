@@ -1,0 +1,57 @@
+[
+  {
+    "nums": [
+      3,
+      4,
+      1,
+      2,
+      6
+    ],
+    "queries": [
+      [
+        0,
+        4
+      ]
+    ],
+    "expected": [
+      false
+    ]
+  },
+  {
+    "nums": [
+      4,
+      3,
+      1,
+      6
+    ],
+    "queries": [
+      [
+        0,
+        2
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "expected": [
+      false,
+      true
+    ]
+  },
+  {
+    "nums": [
+      2,
+      1
+    ],
+    "queries": [
+      [
+        0,
+        1
+      ]
+    ],
+    "expected": [
+      true
+    ]
+  }
+]

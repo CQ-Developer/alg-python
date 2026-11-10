@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3937 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope="module", params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 2 == solution.min_operations([1, 4, 2, 8], 3)
-
-
-def test_2(solution: Solution):
-    assert 1 == solution.min_operations([1, 1, 1], 3)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_min_operations(solution: Solution, case: Case):
+    assert solution.min_operations(case["nums"], case["k"]) == case["expected"]

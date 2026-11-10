@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert [0, 1] == solution.two_sum([2, 7, 11, 15], 9)
-
-
-def test_2(solution: Solution):
-    assert [1, 2] == solution.two_sum([3, 2, 4], 6)
-
-
-def test_3(solution: Solution):
-    assert [0, 1] == solution.two_sum([3, 3], 6)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_two_sum(solution: Solution, case: Case):
+    assert solution.two_sum(case["nums"], case["target"]) == case["expected"]

@@ -1,28 +1,26 @@
-from unittest.mock import MagicMock, patch
+import pytest
 
-from pytest import fixture
+from src.n1095 import MountainArray, Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
-from src.n1095 import Solution, SolutionA
+
+class FakeMountainArray(MountainArray):
+    def __init__(self, arr: list[int]) -> None:
+        self._arr = arr
+
+    def get(self, index: int) -> int:
+        return self._arr[index]
+
+    def length(self) -> int:
+        return len(self._arr)
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    with patch('src.n1095.MountainArray', spec=True) as MockMountainArray:
-        arr = [1, 2, 3, 4, 5, 3, 1]
-        mountain_arr = MockMountainArray.return_value
-        mountain_arr.length.return_value = len(arr)
-        mountain_arr.get.side_effect = lambda i: arr[i]
-        assert 2 == solution.find_in_mountain_array(3, mountain_arr)
-
-
-def test_2(solution: Solution):
-    with patch('src.n1095.MountainArray', spec=True) as MockMountainArray:
-        arr = [0, 1, 2, 4, 2, 1]
-        mountain_arr = MockMountainArray.return_value
-        mountain_arr.length.return_value = len(arr)
-        mountain_arr.get.side_effect = lambda i: arr[i]
-        assert -1 == solution.find_in_mountain_array(3, mountain_arr)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_find_in_mountain_array(solution: Solution, case: Case):
+    mountain_array = FakeMountainArray(case["arr"])
+    assert solution.find_in_mountain_array(case["target"], mountain_array) == case["expected"]

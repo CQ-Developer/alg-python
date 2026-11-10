@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3134 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 1 == solution.median_of_uniqueness_array([1, 2, 3])
-
-
-def test_2(solution: Solution):
-    assert 2 == solution.median_of_uniqueness_array([3, 4, 3, 4, 5])
-
-
-def test_3(solution: Solution):
-    assert 2 == solution.median_of_uniqueness_array([4, 3, 5, 4])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_median_of_uniqueness_array(solution: Solution, case: Case):
+    assert solution.median_of_uniqueness_array(case["nums"]) == case["expected"]

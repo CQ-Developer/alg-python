@@ -1,0 +1,10 @@
+[
+  {
+    "s": "bcabc",
+    "expected": "abc"
+  },
+  {
+    "s": "cbacdcbc",
+    "expected": "acdb"
+  }
+]

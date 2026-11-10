@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2025 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 1 == solution.ways_to_partition([2, -1, 2], 3)
-
-
-def test_2(solution: Solution):
-    assert 2 == solution.ways_to_partition([0, 0, 0], 1)
-
-
-def test_3(solution: Solution):
-    assert 4 == solution.ways_to_partition([22, 4, -25, -20, -15, 15, -16, 7, 19, -10, 0, -13, -14], -33)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_ways_to_partition(solution: Solution, case: Case):
+    assert solution.ways_to_partition(case["nums"], case["k"]) == case["expected"]

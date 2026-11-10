@@ -1,28 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1524 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert 4 == solution.num_of_subarrays([1, 3, 5])
-
-
-def test_b(solution: Solution):
-    assert 0 == solution.num_of_subarrays([2, 4, 6])
-
-
-def test_c(solution: Solution):
-    assert 16 == solution.num_of_subarrays([1, 2, 3, 4, 5, 6, 7])
-
-
-def test_d(solution: Solution):
-    assert 4 == solution.num_of_subarrays([100, 100, 99, 99])
-
-
-def test_e(solution: Solution):
-    assert 1 == solution.num_of_subarrays([7])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_num_of_subarrays(solution: Solution, case: Case):
+    assert solution.num_of_subarrays(case["arr"]) == case["expected"]

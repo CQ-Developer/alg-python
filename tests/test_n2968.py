@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2968 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope="module", params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 3 == solution.max_frequency_score([1, 2, 6, 4], 3)
-
-
-def test_2(solution: Solution):
-    assert 3 == solution.max_frequency_score([1, 4, 4, 2, 4], 0)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_max_frequency_score(solution: Solution, case: Case):
+    assert solution.max_frequency_score(case["nums"], case["k"]) == case["expected"]

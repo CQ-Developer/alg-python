@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3739 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope="module", params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert 5 == solution.count_majority_subarrays([1, 2, 2, 3], 2)
-
-
-def test_b(solution: Solution):
-    assert 10 == solution.count_majority_subarrays([1, 1, 1, 1], 1)
-
-
-def test_c(solution: Solution):
-    assert 0 == solution.count_majority_subarrays([1, 2, 3], 4)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_count_majority_subarrays(solution: Solution, case: Case):
+    assert solution.count_majority_subarrays(case["nums"], case["target"]) == case["expected"]

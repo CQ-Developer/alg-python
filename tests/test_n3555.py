@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3555 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert [2, 2, 0] == solution.min_subarray_sort([1, 3, 2, 4, 5], 3)
-
-
-def test_b(solution: Solution):
-    assert [4, 4] == solution.min_subarray_sort([5, 4, 3, 2, 1], 4)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_min_subarray_sort(solution: Solution, case: Case):
+    assert solution.min_subarray_sort(case["nums"], case["k"]) == case["expected"]

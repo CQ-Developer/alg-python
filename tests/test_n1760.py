@@ -1,18 +1,14 @@
-import unittest
+import pytest
 
 from src.n1760 import Solution
+from tests.case_loader import Case, load_cases
 
 
-def test_1():
-    solution = Solution()
-    assert 3 == solution.minimumSize([9], 2)
+@pytest.fixture(params=[Solution])
+def solution(request: pytest.FixtureRequest) -> Solution:
+    return request.param()
 
 
-def test_2():
-    solution = Solution()
-    assert 2 == solution.minimumSize([2, 4, 8, 2], 4)
-
-
-def test_3():
-    solution = Solution()
-    assert 7 == solution.minimumSize([7, 17], 2)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_minimum_size(solution: Solution, case: Case):
+    assert solution.minimumSize(case["nums"], case["maxOperations"]) == case["expected"]

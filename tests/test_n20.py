@@ -1,36 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n20 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert True == solution.is_valid('()')
-
-
-def test_2(solution: Solution):
-    assert True == solution.is_valid('()[]{}')
-
-
-def test_3(solution: Solution):
-    assert False == solution.is_valid('(]')
-
-
-def test_4(solution: Solution):
-    assert True == solution.is_valid('([])')
-
-
-def test_5(solution: Solution):
-    assert False == solution.is_valid('([)]')
-
-
-def test_6(solution: Solution):
-    assert False == solution.is_valid('({[)')
-
-
-def test_7(solution: Solution):
-    assert False == solution.is_valid(']')
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_is_valid(solution: Solution, case: Case):
+    assert solution.is_valid(case["s"]) == case["expected"]

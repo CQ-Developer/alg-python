@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2736 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert [6, 10, 7] == solution.maximum_sum_queries([4, 3, 1, 2], [2, 4, 9, 5], [[4, 1], [1, 3], [2, 5]])
-
-
-def test_b(solution: Solution):
-    assert [9, 9, 9] == solution.maximum_sum_queries([3, 2, 5], [2, 3, 4], [[4, 4], [3, 2], [1, 1]])
-
-
-def test_c(solution: Solution):
-    assert [-1] == solution.maximum_sum_queries([2, 1], [2, 3], [[3, 3]])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_maximum_sum_queries(solution: Solution, case: Case):
+    assert solution.maximum_sum_queries(case["nums1"], case["nums2"], case["queries"]) == case["expected"]

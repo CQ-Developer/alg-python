@@ -1,18 +1,14 @@
-import unittest
+import pytest
 
 from src.n2064 import Solution
+from tests.case_loader import Case, load_cases
 
 
-def test_1():
-    solution = Solution()
-    assert 3 == solution.minimizedMaximum(6, [11, 6])
+@pytest.fixture(params=[Solution])
+def solution(request: pytest.FixtureRequest) -> Solution:
+    return request.param()
 
 
-def test_2():
-    solution = Solution()
-    assert 5 == solution.minimizedMaximum(7, [15, 10, 10])
-
-
-def test_3():
-    solution = Solution()
-    assert 100000 == solution.minimizedMaximum(1, [100000])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_minimized_maximum(solution: Solution, case: Case):
+    assert solution.minimizedMaximum(case["n"], case["quantities"]) == case["expected"]

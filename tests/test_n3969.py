@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3969 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 4 == solution.count_valid_subarrays([1, 100, 1], 1)
-
-
-def test_2(solution: Solution):
-    assert 0 == solution.count_valid_subarrays([1], 2)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_count_valid_subarrays(solution: Solution, case: Case):
+    assert solution.count_valid_subarrays(case["nums"], case["x"]) == case["expected"]

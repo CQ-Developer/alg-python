@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3729 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 3 == solution.num_good_subarrays([1, 2, 3], 3)
-
-
-def test_2(solution: Solution):
-    assert 2 == solution.num_good_subarrays([2, 2, 2, 2, 2, 2], 6)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_num_good_subarrays(solution: Solution, case: Case):
+    assert solution.num_good_subarrays(case["nums"], case["k"]) == case["expected"]

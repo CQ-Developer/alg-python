@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2104 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert 4 == solution.sub_array_ranges([1, 2, 3])
-
-
-def test_b(solution: Solution):
-    assert 4 == solution.sub_array_ranges([1, 3, 3])
-
-
-def test_c(solution: Solution):
-    assert 59 == solution.sub_array_ranges([4, -2, -3, 4, 1])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_sub_array_ranges(solution: Solution, case: Case):
+    assert solution.sub_array_ranges(case["nums"]) == case["expected"]

@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2441 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 3 == solution.find_max_k([-1, 2, -3, 3])
-
-
-def test_2(solution: Solution):
-    assert 7 == solution.find_max_k([-1, 10, 6, 7, -7, 1])
-
-
-def test_3(solution: Solution):
-    assert -1 == solution.find_max_k([-10, 8, 6, 7, -2, -3])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_find_max_k(solution: Solution, case: Case):
+    assert solution.find_max_k(case["nums"]) == case["expected"]

@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1930 import Solution, SolutionA, SolutionB, SolutionC
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB, SolutionC])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB, SolutionC])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert 3 == solution.count_palindromic_subsequence('aabca')
-
-
-def test_b(solution: Solution):
-    assert 0 == solution.count_palindromic_subsequence('adc')
-
-
-def test_c(solution: Solution):
-    assert 4 == solution.count_palindromic_subsequence('bbcbaba')
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_count_palindromic_subsequence(solution: Solution, case: Case):
+    assert solution.count_palindromic_subsequence(case["s"]) == case["expected"]

@@ -1,0 +1,17 @@
+[
+  {
+    "s": "baeyh",
+    "k": 2,
+    "expected": 2
+  },
+  {
+    "s": "abba",
+    "k": 1,
+    "expected": 3
+  },
+  {
+    "s": "bcdf",
+    "k": 1,
+    "expected": 0
+  }
+]

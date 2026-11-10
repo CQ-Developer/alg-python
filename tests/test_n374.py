@@ -1,31 +1,26 @@
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
-from pytest import fixture
+import pytest
 
 from src.n374 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    with patch('src.n374.guess') as mock:
-        pick = 6
-        mock.side_effect = lambda num: -1 if num > pick else 1 if num < pick else 0
-        assert 6 == solution.guess_number(10)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_guess_number(solution: Solution, case: Case):
+    pick = case["pick"]
 
+    def guess(num: int) -> int:
+        if num > pick:
+            return -1
+        if num < pick:
+            return 1
+        return 0
 
-def test_2(solution: Solution):
-    with patch('src.n374.guess') as mock:
-        pick = 1
-        mock.side_effect = lambda num: -1 if num > pick else 1 if num < pick else 0
-        assert 1 == solution.guess_number(1)
-
-
-def test_3(solution: Solution):
-    with patch('src.n374.guess') as mock:
-        pick = 1
-        mock.side_effect = lambda num: -1 if num > pick else 1 if num < pick else 0
-        assert 1 == solution.guess_number(2)
+    with patch("src.n374.guess", side_effect=guess):
+        assert solution.guess_number(case["n"]) == case["expected"]

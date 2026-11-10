@@ -1,0 +1,17 @@
+[
+  {
+    "s": "000001",
+    "numOps": 1,
+    "expected": 2
+  },
+  {
+    "s": "0000",
+    "numOps": 2,
+    "expected": 1
+  },
+  {
+    "s": "0101",
+    "numOps": 0,
+    "expected": 1
+  }
+]

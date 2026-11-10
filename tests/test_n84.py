@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n84 import Solution, SolutionA, SolutionB, SolutionC
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB, SolutionC])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB, SolutionC])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert 10 == solution.largest_rectangle_area([2, 1, 5, 6, 2, 3])
-
-
-def test_b(solution: Solution):
-    assert 4 == solution.largest_rectangle_area([2, 4])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_largest_rectangle_area(solution: Solution, case: Case):
+    assert solution.largest_rectangle_area(case["heights"]) == case["expected"]

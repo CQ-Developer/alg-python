@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n852 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 1 == solution.peak_index_in_mountain_array([0, 1, 0])
-
-
-def test_2(solution: Solution):
-    assert 1 == solution.peak_index_in_mountain_array([0, 2, 1, 0])
-
-
-def test_3(solution: Solution):
-    assert 1 == solution.peak_index_in_mountain_array([0, 10, 5, 2])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_peak_index_in_mountain_array(solution: Solution, case: Case):
+    assert solution.peak_index_in_mountain_array(case["arr"]) == case["expected"]

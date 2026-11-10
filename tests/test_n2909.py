@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2909 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert 9 == solution.minimum_sum([8, 6, 1, 5, 3])
-
-
-def test_b(solution: Solution):
-    assert 13 == solution.minimum_sum([5, 4, 8, 7, 10, 2])
-
-
-def test_c(solution: Solution):
-    assert -1 == solution.minimum_sum([6, 5, 4, 3, 4, 5])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_minimum_sum(solution: Solution, case: Case):
+    assert solution.minimum_sum(case["nums"]) == case["expected"]

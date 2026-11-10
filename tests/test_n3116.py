@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3116 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 9 == solution.find_kth_smallest([3, 6, 9], 3)
-
-
-def test_2(solution: Solution):
-    assert 12 == solution.find_kth_smallest([5, 2], 7)
-
-
-def test_3(solution: Solution):
-    assert 35 == solution.find_kth_smallest([5], 7)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_find_kth_smallest(solution: Solution, case: Case):
+    assert solution.find_kth_smallest(case["coins"], case["k"]) == case["expected"]

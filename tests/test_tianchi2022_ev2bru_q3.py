@@ -1,24 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.tianchi2022_ev2bru_q3 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert [5, 5, 6] == solution.arrange_bookshelf([5, 5, 6, 5], 2)
-
-
-def test_b(solution: Solution):
-    assert [5, 5, 6, 5] == solution.arrange_bookshelf([5, 5, 6, 5], 3)
-
-
-def test_c(solution: Solution):
-    assert [3, 8, 9, 2] == solution.arrange_bookshelf([3, 3, 9, 8, 9, 2, 8], 1)
-
-
-def test_d(solution: Solution):
-    assert [1, 2, 2, 1, 3, 3] == solution.arrange_bookshelf([2, 1, 2, 2, 1, 3, 3, 1, 3, 3], 2)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_arrange_bookshelf(solution: Solution, case: Case):
+    assert solution.arrange_bookshelf(case["order"], case["limit"]) == case["expected"]

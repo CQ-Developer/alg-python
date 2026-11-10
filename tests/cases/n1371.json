@@ -1,0 +1,14 @@
+[
+  {
+    "s": "eleetminicoworoep",
+    "expected": 13
+  },
+  {
+    "s": "leetcodeisgreat",
+    "expected": 5
+  },
+  {
+    "s": "bcbcbc",
+    "expected": 6
+  }
+]

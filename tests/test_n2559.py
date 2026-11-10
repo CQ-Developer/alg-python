@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2559 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert [2, 3, 0] == solution.vowel_strings(['aba', 'bcb', 'ece', 'aa', 'e'], [[0, 2], [1, 4], [1, 1]])
-
-
-def test_b(solution: Solution):
-    assert [3, 2, 1] == solution.vowel_strings(['a', 'e', 'i'], [[0, 2], [0, 1], [2, 2]])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_vowel_strings(solution: Solution, case: Case):
+    assert solution.vowel_strings(case["words"], case["queries"]) == case["expected"]

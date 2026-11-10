@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3221 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert 16 == solution.max_score([1, 5, 8])
-
-
-def test_b(solution: Solution):
-    assert 42 == solution.max_score([4, 5, 2, 8, 9, 1, 3])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_max_score(solution: Solution, case: Case):
+    assert solution.max_score(case["nums"]) == case["expected"]

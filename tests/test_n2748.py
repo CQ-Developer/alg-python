@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2748 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 5 == solution.count_beautiful_pairs([2, 5, 1, 4])
-
-
-def test_2(solution: Solution):
-    assert 2 == solution.count_beautiful_pairs([11, 21, 12])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_count_beautiful_pairs(solution: Solution, case: Case):
+    assert solution.count_beautiful_pairs(case["nums"]) == case["expected"]

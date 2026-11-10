@@ -1,0 +1,10 @@
+[
+  {
+    "s": "leetcode",
+    "expected": 2
+  },
+  {
+    "s": "abbcccddddeeeeedcba",
+    "expected": 5
+  }
+]

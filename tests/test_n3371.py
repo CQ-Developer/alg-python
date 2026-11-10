@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3371 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 10 == solution.get_largest_outlier([2, 3, 5, 10])
-
-
-def test_2(solution: Solution):
-    assert 4 == solution.get_largest_outlier([-2, -1, -3, -6, 4])
-
-
-def test_3(solution: Solution):
-    assert 5 == solution.get_largest_outlier([1, 1, 1, 1, 1, 5, 5])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_get_largest_outlier(solution: Solution, case: Case):
+    assert solution.get_largest_outlier(case["nums"]) == case["expected"]

@@ -1,0 +1,10 @@
+[
+  {
+    "s": "leet**cod*e",
+    "expected": "lecoe"
+  },
+  {
+    "s": "erase*****",
+    "expected": ""
+  }
+]

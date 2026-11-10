@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n373 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert [[1, 2], [1, 4], [1, 6]] == solution.kSmallestPairs([1, 7, 11], [2, 4, 6], 3)
-
-
-def test_2(solution: Solution):
-    assert [[1, 1], [1, 1]] == solution.kSmallestPairs([1, 1, 2], [1, 2, 3], 2)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_k_smallest_pairs(solution: Solution, case: Case):
+    assert solution.kSmallestPairs(case["nums1"], case["nums2"], case["k"]) == case["expected"]

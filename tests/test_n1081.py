@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1081 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert 'abc' == solution.smallest_subsequence('bcabc')
-
-
-def test_b(solution: Solution):
-    assert 'acdb' == solution.smallest_subsequence('cbacdcbc')
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_smallest_subsequence(solution: Solution, case: Case):
+    assert solution.smallest_subsequence(case["s"]) == case["expected"]

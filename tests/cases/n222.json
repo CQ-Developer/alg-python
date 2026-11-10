@@ -1,0 +1,23 @@
+[
+  {
+    "root": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "expected": 6
+  },
+  {
+    "root": null,
+    "expected": 0
+  },
+  {
+    "root": [
+      1
+    ],
+    "expected": 1
+  }
+]

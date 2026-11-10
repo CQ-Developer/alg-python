@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2874 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 77 == solution.maximum_triple_value([12, 6, 1, 2, 7])
-
-
-def test_2(solution: Solution):
-    assert 133 == solution.maximum_triple_value([1, 10, 3, 4, 19])
-
-
-def test_3(solution: Solution):
-    assert 0 == solution.maximum_triple_value([1, 2, 3])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_maximum_triple_value(solution: Solution, case: Case):
+    assert solution.maximum_triple_value(case["nums"]) == case["expected"]

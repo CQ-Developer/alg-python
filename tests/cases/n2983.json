@@ -1,0 +1,51 @@
+[
+  {
+    "s": "abcabc",
+    "queries": [
+      [
+        1,
+        1,
+        3,
+        5
+      ],
+      [
+        0,
+        2,
+        5,
+        5
+      ]
+    ],
+    "expected": [
+      true,
+      true
+    ]
+  },
+  {
+    "s": "abbcdecbba",
+    "queries": [
+      [
+        0,
+        2,
+        7,
+        9
+      ]
+    ],
+    "expected": [
+      false
+    ]
+  },
+  {
+    "s": "acbcab",
+    "queries": [
+      [
+        1,
+        2,
+        4,
+        5
+      ]
+    ],
+    "expected": [
+      true
+    ]
+  }
+]

@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1539 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 9 == solution.find_kth_positive([2, 3, 4, 7, 11], 5)
-
-
-def test_2(solution: Solution):
-    assert 6 == solution.find_kth_positive([1, 2, 3, 4], 2)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_find_kth_positive(solution: Solution, case: Case):
+    assert solution.find_kth_positive(case["arr"], case["k"]) == case["expected"]

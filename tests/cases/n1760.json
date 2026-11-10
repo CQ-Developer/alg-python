@@ -1,0 +1,27 @@
+[
+  {
+    "nums": [
+      9
+    ],
+    "maxOperations": 2,
+    "expected": 3
+  },
+  {
+    "nums": [
+      2,
+      4,
+      8,
+      2
+    ],
+    "maxOperations": 4,
+    "expected": 2
+  },
+  {
+    "nums": [
+      7,
+      17
+    ],
+    "maxOperations": 2,
+    "expected": 7
+  }
+]

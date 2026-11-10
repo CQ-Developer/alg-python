@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3412 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 5 == solution.calculate_score('aczzx')
-
-
-def test_2(solution: Solution):
-    assert 0 == solution.calculate_score('abcdef')
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_calculate_score(solution: Solution, case: Case):
+    assert solution.calculate_score(case["s"]) == case["expected"]

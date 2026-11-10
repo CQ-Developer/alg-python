@@ -1,0 +1,14 @@
+[
+  {
+    "s": "abbac",
+    "expected": 4
+  },
+  {
+    "s": "zzabccy",
+    "expected": 4
+  },
+  {
+    "s": "aba",
+    "expected": 2
+  }
+]

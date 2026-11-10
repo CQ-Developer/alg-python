@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3430 import Solution, SolutionA, SolutionB, SolutionC
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB, SolutionC])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB, SolutionC])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert 20 == solution.min_max_subarray_sum([1, 2, 3], 2)
-
-
-def test_b(solution: Solution):
-    assert -6 == solution.min_max_subarray_sum([1, -3, 1], 2)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_min_max_subarray_sum(solution: Solution, case: Case):
+    assert solution.min_max_subarray_sum(case["nums"], case["k"]) == case["expected"]

@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1475 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert [4, 2, 4, 2, 3] == solution.final_prices([8, 4, 6, 2, 3])
-
-
-def test_2(solution: Solution):
-    assert [1, 2, 3, 4, 5] == solution.final_prices([1, 2, 3, 4, 5])
-
-
-def test_3(solution: Solution):
-    assert [9, 0, 1, 6] == solution.final_prices([10, 1, 1, 6])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_final_prices(solution: Solution, case: Case):
+    assert solution.final_prices(case["prices"]) == case["expected"]

@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2342 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 54 == solution.maximum_sum([18, 43, 36, 13, 7])
-
-
-def test_2(solution: Solution):
-    assert -1 == solution.maximum_sum([10, 12, 19, 14])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_maximum_sum(solution: Solution, case: Case):
+    assert solution.maximum_sum(case["nums"]) == case["expected"]

@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3480 import Solution, SolutionA, SolutionB, SolutionC
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB, SolutionC])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB, SolutionC])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 9 == solution.max_subarrays(4, [[2, 3], [1, 4]])
-
-
-def test_2(solution: Solution):
-    assert 12 == solution.max_subarrays(5, [[1, 2], [2, 5], [3, 5]])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_max_subarrays(solution: Solution, case: Case):
+    assert solution.max_subarrays(case["n"], case["conflicting_pairs"]) == case["expected"]

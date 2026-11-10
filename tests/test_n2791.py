@@ -1,6 +1,7 @@
 import pytest
 
 from src.n2791 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
 @pytest.fixture(params=[SolutionA])
@@ -8,9 +9,6 @@ def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert solution.count_palindrome_paths([-1, 0, 0, 1, 1, 2], "acaabc") == 8
-
-
-def test_2(solution: Solution):
-    assert solution.count_palindrome_paths([-1, 0, 0, 0, 0], "aaaaa") == 10
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_count_palindrome_paths(solution: Solution, case: Case):
+    assert solution.count_palindrome_paths(case["parent"], case["s"]) == case["expected"]

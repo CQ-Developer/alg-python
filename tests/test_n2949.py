@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2949 import Solution, SolutionA, SolutionB, SolutionC, SolutionD
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope="module", params=[SolutionA, SolutionB, SolutionC, SolutionD])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB, SolutionC, SolutionD])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 2 == solution.beautiful_substrings("baeyh", 2)
-
-
-def test_2(solution: Solution):
-    assert 3 == solution.beautiful_substrings("abba", 1)
-
-
-def test_3(solution: Solution):
-    assert 0 == solution.beautiful_substrings("bcdf", 1)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_beautiful_substrings(solution: Solution, case: Case):
+    assert solution.beautiful_substrings(case["s"], case["k"]) == case["expected"]

@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n930 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert 4 == solution.num_subarrays_with_sum([1, 0, 1, 0, 1], 2)
-
-
-def test_b(solution: Solution):
-    assert 15 == solution.num_subarrays_with_sum([0, 0, 0, 0, 0], 0)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_num_subarrays_with_sum(solution: Solution, case: Case):
+    assert solution.num_subarrays_with_sum(case["nums"], case["goal"]) == case["expected"]

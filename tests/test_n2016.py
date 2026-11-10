@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2016 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 4 == solution.maximum_difference([7, 1, 5, 4])
-
-
-def test_2(solution: Solution):
-    assert -1 == solution.maximum_difference([9, 4, 3, 2])
-
-
-def test_3(solution: Solution):
-    assert 9 == solution.maximum_difference([1, 5, 2, 10])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_maximum_difference(solution: Solution, case: Case):
+    assert solution.maximum_difference(case["nums"]) == case["expected"]

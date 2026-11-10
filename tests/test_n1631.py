@@ -1,22 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1631 import Solution, SolutionA, SolutionB, SolutionC
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB, SolutionC])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB, SolutionC])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 2 == solution.minimumEffortPath([[1, 2, 2], [3, 8, 2], [5, 3, 5]])
-
-
-def test_2(solution: Solution):
-    assert 1 == solution.minimumEffortPath([[1, 2, 3], [3, 8, 4], [5, 3, 5]])
-
-
-def test_3(solution: Solution):
-    assert 0 == solution.minimumEffortPath(
-        [[1, 2, 1, 1, 1], [1, 2, 1, 2, 1], [1, 2, 1, 2, 1], [1, 2, 1, 2, 1], [1, 1, 1, 2, 1]]
-    )
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_minimum_effort_path(solution: Solution, case: Case):
+    assert solution.minimumEffortPath(case["heights"]) == case["expected"]

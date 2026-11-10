@@ -1,15 +1,14 @@
+import pytest
+
 from src.n1472 import BrowserHistory
+from tests.case_loader import Case, load_cases
 
 
-def test_1():
-    browser = BrowserHistory('leetcode.com')
-    browser.visit('google.com')
-    browser.visit('facebook.com')
-    browser.visit('youtube.com')
-    assert 'facebook.com' == browser.back(1)
-    assert 'google.com' == browser.back(1)
-    assert 'facebook.com' == browser.forward(1)
-    browser.visit('linkedin.com')
-    assert 'linkedin.com' == browser.forward(2)
-    assert 'google.com' == browser.back(2)
-    assert 'leetcode.com' == browser.back(7)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_browser_history(case: Case):
+    browser_history = BrowserHistory(*case["init"])
+    actual = [
+        getattr(browser_history, operation)(*arguments)
+        for operation, arguments in zip(case["operations"], case["arguments"])
+    ]
+    assert actual == case["expected"]

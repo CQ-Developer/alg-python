@@ -1,0 +1,22 @@
+[
+  {
+    "s": "abaacbaecebce",
+    "p": "ba*c*ce",
+    "expected": 8
+  },
+  {
+    "s": "baccbaadbc",
+    "p": "cc*baa*adb",
+    "expected": -1
+  },
+  {
+    "s": "a",
+    "p": "**",
+    "expected": 0
+  },
+  {
+    "s": "madlogic",
+    "p": "*adlogi*",
+    "expected": 6
+  }
+]

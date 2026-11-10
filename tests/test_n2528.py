@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2528 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 5 == solution.maxPower([1, 2, 4, 5, 0], 1, 2)
-
-
-def test_2(solution: Solution):
-    assert 4 == solution.maxPower([4, 4, 4, 4], 0, 3)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_max_power(solution: Solution, case: Case):
+    assert solution.maxPower(case["stations"], case["r"], case["k"]) == case["expected"]

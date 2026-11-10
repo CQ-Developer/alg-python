@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n2615 import Solution, SolutionA, SolutionB
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope="module", params=[SolutionA, SolutionB])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert [5, 0, 3, 4, 0] == solution.distance([1, 3, 1, 1, 2])
-
-
-def test_2(solution: Solution):
-    assert [0, 0, 0] == solution.distance([0, 5, 3])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_distance(solution: Solution, case: Case):
+    assert solution.distance(case["nums"]) == case["expected"]

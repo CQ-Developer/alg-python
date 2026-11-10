@@ -1,20 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n402 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution: Solution):
-    assert '1219' == solution.remove_k_digits('1432219', 3)
-
-
-def test_b(solution: Solution):
-    assert '200' == solution.remove_k_digits('10200', 1)
-
-
-def test_c(solution: Solution):
-    assert '0' == solution.remove_k_digits('10', 2)
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_remove_k_digits(solution: Solution, case: Case):
+    assert solution.remove_k_digits(case["num"], case["k"]) == case["expected"]

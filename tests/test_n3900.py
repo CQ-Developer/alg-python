@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n3900 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution):
-    assert solution.longest_balanced('100001') == 4
-
-
-def test_b(solution):
-    assert solution.longest_balanced('111') == 0
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_longest_balanced(solution: Solution, case: Case):
+    assert solution.longest_balanced(case["s"]) == case["expected"]

@@ -1,0 +1,28 @@
+[
+  {
+    "words": [
+      "aba",
+      "aabb",
+      "abcd",
+      "bac",
+      "aabc"
+    ],
+    "expected": 2
+  },
+  {
+    "words": [
+      "aabb",
+      "ab",
+      "ba"
+    ],
+    "expected": 3
+  },
+  {
+    "words": [
+      "nba",
+      "cba",
+      "dba"
+    ],
+    "expected": 0
+  }
+]

@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1124 import Solution, SolutionA, SolutionB, SolutionC
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA, SolutionB, SolutionC])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA, SolutionB, SolutionC])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_a(solution):
-    assert solution.longest_WPI([9, 9, 6, 0, 6, 6, 9]) == 3
-
-
-def test_b(solution):
-    assert solution.longest_WPI([6, 6, 6]) == 0
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_longest_w_p_i(solution: Solution, case: Case):
+    assert solution.longest_WPI(case["hours"]) == case["expected"]

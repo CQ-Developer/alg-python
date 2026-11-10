@@ -1,0 +1,34 @@
+[
+  {
+    "max_heights": [
+      5,
+      3,
+      4,
+      1,
+      1
+    ],
+    "expected": 13
+  },
+  {
+    "max_heights": [
+      6,
+      5,
+      3,
+      9,
+      2,
+      7
+    ],
+    "expected": 22
+  },
+  {
+    "max_heights": [
+      3,
+      2,
+      5,
+      5,
+      2,
+      3
+    ],
+    "expected": 18
+  }
+]

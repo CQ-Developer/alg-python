@@ -1,16 +1,14 @@
-from pytest import fixture
+import pytest
 
 from src.n1014 import Solution, SolutionA
+from tests.case_loader import Case, load_cases
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    assert 11 == solution.max_score_sightseeing_pair([8, 1, 5, 2, 6])
-
-
-def test_2(solution: Solution):
-    assert 2 == solution.max_score_sightseeing_pair([1, 2])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_max_score_sightseeing_pair(solution: Solution, case: Case):
+    assert solution.max_score_sightseeing_pair(case["values"]) == case["expected"]

@@ -1,20 +1,16 @@
-from pytest import fixture
+import pytest
 
 from src.n2476 import Solution, SolutionA, TreeNode
+from tests.case_loader import Case, load_cases
+from tests.serde import build_tree
 
 
-@fixture(scope='module', params=[SolutionA])
-def solution(request) -> Solution:
+@pytest.fixture(params=[SolutionA])
+def solution(request: pytest.FixtureRequest) -> Solution:
     return request.param()
 
 
-def test_1(solution: Solution):
-    root = TreeNode(
-        6, TreeNode(2, TreeNode(1), TreeNode(4)), TreeNode(13, TreeNode(9), TreeNode(15, TreeNode(14), None))
-    )
-    assert [[2, 2], [4, 6], [15, -1]] == solution.closest_nodes(root, [2, 5, 16])
-
-
-def test_2(solution: Solution):
-    root = TreeNode(4, None, TreeNode(9))
-    assert [[-1, 4]] == solution.closest_nodes(root, [3])
+@pytest.mark.parametrize("case", load_cases(__file__))
+def test_closest_nodes(solution: Solution, case: Case):
+    root = build_tree(TreeNode, case["root"])
+    assert solution.closest_nodes(root, case["queries"]) == case["expected"]
